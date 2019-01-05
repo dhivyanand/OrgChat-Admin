@@ -22,7 +22,7 @@ public class HomeAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return 6;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class HomeAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return 6;
     }
 
     @Override
@@ -42,6 +42,9 @@ public class HomeAdapter extends BaseAdapter {
         View root = layoutInflater.inflate(R.layout.homeadapter,null);
         ImageView icon = (ImageView)root.findViewById(R.id.icon);
         TextView title = (TextView)root.findViewById(R.id.title);
+
+        //icon.setImageResource(Constant.home_menu_icon[i]);
+        //title.setText(Constant.home_menu_title[i]);
 
         return root;
     }
