@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".Login" />
         <activity android:name=".Logout" />
-        <activity android:name=".home"></activity>
+        <activity android:name=".home" />
+        <activity android:name=".chatActivity"></activity>
     </application>
 
 </manifest>
