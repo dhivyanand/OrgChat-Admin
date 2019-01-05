@@ -6,4 +6,7 @@ package com.example.system.orgchatadmin;
 
 public class Constants {
 
+    static String home_menu_title[] = {"Users","Messages"};
+    static int home_menu_icon[] = {R.mipmap.ic_launcher,R.mipmap.ic_messages_round};
+
 }
