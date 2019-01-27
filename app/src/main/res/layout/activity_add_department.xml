@@ -72,7 +72,7 @@
         android:id="@+id/space4" />
 
     <ListView
-        android:id="@+id/list"
+        android:id="@+id/user_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/done"
@@ -92,7 +92,7 @@
         android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/list"
+        android:layout_below="@+id/user_list"
         android:layout_toLeftOf="@+id/done"
         android:layout_toStartOf="@+id/done"
         android:text="Cancel" />

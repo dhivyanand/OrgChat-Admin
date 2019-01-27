@@ -1,6 +1,5 @@
 package com.example.system.orgchatadmin;
 
-import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +26,7 @@ public class AddDepartment extends AppCompatActivity {
         sub_dept = (EditText)findViewById(R.id.sub_dept);
         verify = (ImageButton)findViewById(R.id.verify);
         add = (ImageButton)findViewById(R.id.add_sub_dept);
-        list = (ListView)findViewById(R.id.list);
+        list = (ListView)findViewById(R.id.user_list);
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override

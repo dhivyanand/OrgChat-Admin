@@ -81,6 +81,7 @@ public class HomeNav extends AppCompatActivity
             fragment = new DepartmentFragment();
             getSupportActionBar().setTitle("Department");
         } else if (id == R.id.nav_user) {
+            fragment = new UserFragment();
             getSupportActionBar().setTitle("User");
         } else if (id == R.id.nav_suggestion) {
             getSupportActionBar().setTitle("Suggestion");
