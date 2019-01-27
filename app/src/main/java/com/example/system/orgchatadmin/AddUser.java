@@ -1,20 +1,13 @@
 package com.example.system.orgchatadmin;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 
-public class home extends AppCompatActivity {
-
-    GridView grid;
+public class AddUser extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-
+        setContentView(R.layout.activity_add_user);
     }
 }
