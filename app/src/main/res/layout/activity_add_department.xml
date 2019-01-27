@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/imageButton"
-        android:layout_toStartOf="@+id/imageButton"
+        android:layout_toLeftOf="@+id/verify"
+        android:layout_toStartOf="@+id/verify"
         android:ems="10"
         android:hint="Department"
         android:inputType="textPersonName"
@@ -20,7 +20,7 @@
         android:paddingTop="5dp" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/verify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/dept"
@@ -44,15 +44,15 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:layout_below="@+id/space3"
-        android:layout_toLeftOf="@+id/imageButton2"
-        android:layout_toStartOf="@+id/imageButton2"
+        android:layout_toLeftOf="@+id/add_sub_dept"
+        android:layout_toStartOf="@+id/add_sub_dept"
         android:ems="10"
         android:hint="Sub Department"
         android:inputType="textPersonName"
         android:paddingLeft="10dp" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/add_sub_dept"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/sub_dept"
@@ -72,6 +72,7 @@
         android:id="@+id/space4" />
 
     <ListView
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/done"
@@ -86,5 +87,14 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:text="Done" />
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/list"
+        android:layout_toLeftOf="@+id/done"
+        android:layout_toStartOf="@+id/done"
+        android:text="Cancel" />
 
 </RelativeLayout>
