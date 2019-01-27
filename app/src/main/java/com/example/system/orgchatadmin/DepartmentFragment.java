@@ -1,6 +1,7 @@
 package com.example.system.orgchatadmin;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -38,7 +39,7 @@ public class DepartmentFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(getActivity(), "Button Clicked", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(),AddDepartment.class));
 
             }
         });

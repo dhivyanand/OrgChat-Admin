@@ -1,9 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.system.orgchatadmin.AddDepartment">
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/dept"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/imageButton"
+        android:layout_toStartOf="@+id/imageButton"
+        android:ems="10"
+        android:hint="Department"
+        android:inputType="textPersonName"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/dept"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@android:color/white"
+        app:srcCompat="@drawable/ic_tick" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@+id/dept"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/space3" />
+
+    <EditText
+        android:id="@+id/sub_dept"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_below="@+id/space3"
+        android:layout_toLeftOf="@+id/imageButton2"
+        android:layout_toStartOf="@+id/imageButton2"
+        android:ems="10"
+        android:hint="Sub Department"
+        android:inputType="textPersonName"
+        android:paddingLeft="10dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/sub_dept"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:layout_below="@+id/space3"
+        android:background="@android:color/white"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@+id/sub_dept"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/space4" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/done"
+        android:layout_below="@+id/space4"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="Done" />
+
+</RelativeLayout>
