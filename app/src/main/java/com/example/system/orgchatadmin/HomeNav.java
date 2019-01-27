@@ -79,18 +79,19 @@ public class HomeNav extends AppCompatActivity
 
         if (id == R.id.nav_department) {
             fragment = new DepartmentFragment();
+            getSupportActionBar().setTitle("Department");
         } else if (id == R.id.nav_user) {
-
+            getSupportActionBar().setTitle("User");
         } else if (id == R.id.nav_suggestion) {
-
+            getSupportActionBar().setTitle("Suggestion");
         } else if (id == R.id.nav_compliant) {
-
+            getSupportActionBar().setTitle("Compliant");
         } else if (id == R.id.nav_circular) {
-
+            getSupportActionBar().setTitle("Circular");
         } else if (id == R.id.nav_account_settings) {
-
+            getSupportActionBar().setTitle("Account");
         } else if (id == R.id.nav_server_settings) {
-
+            getSupportActionBar().setTitle("Server");
         }
 
         if (fragment != null) {

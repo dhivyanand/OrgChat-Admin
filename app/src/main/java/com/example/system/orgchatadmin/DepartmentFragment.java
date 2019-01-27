@@ -33,7 +33,6 @@ public class DepartmentFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_department, container, false);
 
         ListView dept = (ListView)root.findViewById(R.id.dept_list);
-
         Button add = (Button)root.findViewById(R.id.add_dept);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
