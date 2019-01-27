@@ -3,6 +3,8 @@ package com.example.system.orgchatadmin;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -31,6 +33,8 @@ public class HomeNav extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(0);
+
     }
 
     @Override
@@ -71,8 +75,10 @@ public class HomeNav extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        Fragment fragment = null;
+
         if (id == R.id.nav_department) {
-            // Handle the camera action
+            fragment = new DepartmentFragment();
         } else if (id == R.id.nav_user) {
 
         } else if (id == R.id.nav_suggestion) {
@@ -85,6 +91,12 @@ public class HomeNav extends AppCompatActivity
 
         } else if (id == R.id.nav_server_settings) {
 
+        }
+
+        if (fragment != null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.home_frame, fragment);
+            transaction.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
