@@ -21,7 +21,11 @@
         <activity android:name=".Login" />
         <activity android:name=".Logout" />
         <activity android:name=".home" />
-        <activity android:name=".AddUser"></activity>
+        <activity android:name=".AddUser" />
+        <activity
+            android:name=".HomeNav"
+            android:label="@string/title_activity_home_nav"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -16,5 +16,7 @@ public class home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        startActivity(new Intent(home.this,HomeNav.class));
+
     }
 }
