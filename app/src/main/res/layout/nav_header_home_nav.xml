@@ -23,7 +23,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="android.studio@android.com"
+        android:text="admin"
         android:paddingTop="5dp"/>
 
 </LinearLayout>
