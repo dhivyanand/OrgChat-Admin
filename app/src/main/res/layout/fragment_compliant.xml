@@ -4,9 +4,10 @@
     android:layout_height="match_parent"
     tools:context="com.example.system.orgchatadmin.CompliantFragment">
 
-    <TextView
+    <ListView
+        android:id="@+id/compliant_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
 </RelativeLayout>
