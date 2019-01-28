@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.system.orgchatadmin.NewCircular">
+
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/space11" />
+
+    <EditText
+        android:id="@+id/circular_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/space11"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:hint="Title"
+        android:inputType="textPersonName" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@+id/circular_title"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/space12" />
+
+    <Button
+        android:id="@+id/select_dept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/space12"
+        android:text="Select Department" />
+
+    <TextView
+        android:id="@+id/selected_dept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/select_dept"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/space12"
+        android:layout_toEndOf="@+id/select_dept"
+        android:layout_toRightOf="@+id/select_dept"
+        android:gravity="center"
+        android:text="TextView" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@+id/selected_dept"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/space13" />
+
+    <EditText
+        android:id="@+id/circular_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/space14"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/space13"
+        android:ems="10"
+        android:hint="Description"
+        android:inputType="textMultiLine"
+        android:textAlignment="center" />
+
+    <Space
+        android:id="@+id/space14"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true" />
+
+    <GridView
+        android:id="@+id/attachment_list"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_above="@+id/post"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/space14" />
+
+    <Button
+        android:id="@+id/post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/selected_dept"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/selected_dept"
+        android:text="Post" />
+
+</RelativeLayout>
