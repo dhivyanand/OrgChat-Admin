@@ -51,7 +51,7 @@
         android:layout_toEndOf="@+id/select_dept"
         android:layout_toRightOf="@+id/select_dept"
         android:gravity="center"
-        android:text="TextView" />
+        android:text="No Departments" />
 
     <Space
         android:layout_width="match_parent"
@@ -71,7 +71,7 @@
         android:ems="10"
         android:hint="Description"
         android:inputType="textMultiLine"
-        android:textAlignment="center" />
+        android:gravity="top" />
 
     <Space
         android:id="@+id/space14"

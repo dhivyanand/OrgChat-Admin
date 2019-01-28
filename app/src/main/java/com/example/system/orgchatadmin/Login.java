@@ -2,7 +2,9 @@ package com.example.system.orgchatadmin;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.app.NotificationCompatSideChannelService;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +26,30 @@ import java.util.Map;
 
 public class Login extends AppCompatActivity {
 
+     boolean verify_admin(String uname , String pass){
+
+        return true;
+    }
+
+    private boolean create_local_pref(String uname , String pass){
+
+        try {
+
+            SharedPreferences sharedpreferences = getSharedPreferences("AppSession", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString("status", "verified");
+            editor.putString("user", uname);
+            editor.putString("password", pass);
+            editor.commit();
+
+            return true;
+
+        }catch(Exception e){
+            return false;
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,60 +64,21 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(username.getText() != null && password.getText() != null){
+                String uname = username.getText().toString() , pass = password.getText().toString();
 
-                    RequestQueue queue = Volley.newRequestQueue(Login.this);
-                    final String url = LocalConfig.rootURL+"adminLogin.php";
+                if (uname != null && pass != null) {
 
-                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                            (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    if(verify_admin(uname,pass)){
 
-                                @Override
-                                public void onResponse(JSONObject response) {
-
-                                    try {
-                                        if (response.get("result").toString().equals("Login Successful")) {
-                                            SQLiteDatabase db = openOrCreateDatabase("OrgChat", Context.MODE_PRIVATE, null);
-                                            db.execSQL("insert into profile values('"+response.get("name").toString()+"','"+username.getText().toString()+"','"+response.get("dp").toString()+"','"+password.getText().toString()+"')");
-
-                                            db.close();
-                                            startActivity(new Intent(Login.this,home.class));
-                                            finish();
-                                        }else{
-                                            Toast.makeText(Login.this, "Unable to Login.", Toast.LENGTH_SHORT).show();
-                                        }
-                                    } catch (Exception e) {
-                                        //Toast.makeText(Login.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-
-
-                            }, new Response.ErrorListener() {
-
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-
-                                    Toast.makeText(Login.this, error.toString(), Toast.LENGTH_SHORT).show();
-
-                                }
-                            }){
-                        @Override
-                        protected Map<String, String> getParams()
-                        {
-                            Map<String, String>  params = new HashMap<String, String>();
-                            params.put("id", username.getText().toString());
-                            params.put("password", password.getText().toString());
-
-                            return params;
+                        if(create_local_pref(uname,pass)){
+                            startActivity(new Intent(Login.this,HomeNav.class));
+                            finish();
                         }
-                    };
 
-                    queue.add(jsonObjectRequest);
+                    }
 
-
-                }else{
-                    Toast.makeText(Login.this, "Fill in the fields.", Toast.LENGTH_LONG).show();
-                }
+                } else
+                    Toast.makeText(Login.this, "Please fill in the fields.", Toast.LENGTH_SHORT).show();
 
             }
         });
