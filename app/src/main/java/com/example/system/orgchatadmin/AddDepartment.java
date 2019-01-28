@@ -26,7 +26,7 @@ public class AddDepartment extends AppCompatActivity {
         sub_dept = (EditText)findViewById(R.id.sub_dept);
         verify = (ImageButton)findViewById(R.id.verify);
         add = (ImageButton)findViewById(R.id.add_sub_dept);
-        list = (ListView)findViewById(R.id.user_list);
+        list = (ListView)findViewById(R.id.list_user);
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
