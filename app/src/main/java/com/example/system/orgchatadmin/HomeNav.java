@@ -14,9 +14,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class HomeNav extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private boolean create_DB(){
+
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +30,11 @@ public class HomeNav extends AppCompatActivity
         setContentView(R.layout.activity_home_nav);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if(!create_DB()){
+            Toast.makeText(this, "Unable to launch application", Toast.LENGTH_SHORT).show();
+            finish();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

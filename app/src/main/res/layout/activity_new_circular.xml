@@ -38,6 +38,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/space12"
+        android:layout_marginLeft="9dp"
         android:text="Select Department" />
 
     <TextView
@@ -62,11 +63,18 @@
 
     <EditText
         android:id="@+id/circular_description"
+        android:background="@drawable/description_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/space14"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:layout_below="@+id/space13"
         android:ems="10"
         android:hint="Description"
