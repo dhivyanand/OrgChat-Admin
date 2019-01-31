@@ -93,9 +93,16 @@
         android:id="@+id/attachment_list"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:background="@drawable/attachment_bg"
         android:layout_above="@+id/post"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:layout_below="@+id/space14" />
 
     <Button
