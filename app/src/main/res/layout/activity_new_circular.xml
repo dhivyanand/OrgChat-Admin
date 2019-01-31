@@ -20,6 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/space11"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:ems="10"
         android:hint="Title"
         android:inputType="textPersonName" />
@@ -63,23 +65,23 @@
 
     <EditText
         android:id="@+id/circular_description"
-        android:background="@drawable/description_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/space14"
+        android:layout_above="@+id/post"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_below="@+id/space13"
+        android:layout_below="@+id/space14"
+        android:background="@drawable/description_bg"
         android:ems="10"
+        android:gravity="top"
         android:hint="Description"
         android:inputType="textMultiLine"
-        android:gravity="top" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp" />
 
     <Space
         android:id="@+id/space14"
@@ -93,25 +95,25 @@
         android:id="@+id/attachment_list"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:layout_above="@+id/space14"
+        android:layout_alignEnd="@+id/selected_dept"
+        android:layout_alignRight="@+id/selected_dept"
+        android:layout_below="@+id/space13"
         android:background="@drawable/attachment_bg"
-        android:layout_above="@+id/post"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_below="@+id/space14" />
+        android:paddingTop="10dp" />
 
     <Button
         android:id="@+id/post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/selected_dept"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/selected_dept"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="6dp"
         android:text="Post" />
 
 </RelativeLayout>
