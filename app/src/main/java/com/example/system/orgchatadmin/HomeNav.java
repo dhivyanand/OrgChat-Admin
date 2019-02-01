@@ -19,22 +19,12 @@ import android.widget.Toast;
 public class HomeNav extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private boolean create_DB(){
-
-        return true;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_nav);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        if(!create_DB()){
-            Toast.makeText(this, "Unable to launch application", Toast.LENGTH_SHORT).show();
-            finish();
-        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

@@ -35,8 +35,10 @@
         android:layout_alignTop="@+id/textView2"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
         android:background="@drawable/user_bg"
         android:elevation="0dp"
-        app:srcCompat="@drawable/ic_profile" />
+        app:srcCompat="@drawable/ic_user_profile" />
 
 </RelativeLayout>
