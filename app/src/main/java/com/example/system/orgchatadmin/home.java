@@ -13,11 +13,6 @@ public class home extends AppCompatActivity {
 
     GridView grid;
 
-    private boolean check_session(String uname , String password){
-
-        return true;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,10 +25,7 @@ public class home extends AppCompatActivity {
         String password = sharedpreferences.getString("password","nil");
 
         if(status.equals("verified"))
-            if(check_session(user,password))
                 startActivity(new Intent(home.this,HomeNav.class));
-            else
-                startActivity(new Intent(home.this,Login.class));
         else
             startActivity(new Intent(home.this,Login.class));
 
