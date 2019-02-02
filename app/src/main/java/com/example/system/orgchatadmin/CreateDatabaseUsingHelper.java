@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class CreateDatabaseUsingHelper extends SQLiteOpenHelper {
 
-    public CreateDatabaseUsingHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public CreateDatabaseUsingHelper(Context context) {
+        super(context, "org_chat_db", null, 1);
     }
 
     @Override
