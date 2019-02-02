@@ -35,6 +35,7 @@ public class Login extends AppCompatActivity {
 
         try{
 
+            getApplication().deleteDatabase("");
             return true;
 
         }catch(Exception e){
@@ -82,7 +83,7 @@ public class Login extends AppCompatActivity {
 
                     if(verify_admin(uname,pass)){
 
-                        if(create_local_pref(uname,pass)){
+                        if(create_local_pref(uname,pass) && create_local_database()){
                             startActivity(new Intent(Login.this,HomeNav.class));
                             finish();
                         }
