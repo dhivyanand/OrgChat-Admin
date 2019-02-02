@@ -31,6 +31,18 @@ public class Login extends AppCompatActivity {
         return true;
     }
 
+    private boolean create_local_database(){
+
+        try{
+
+            return true;
+
+        }catch(Exception e){
+            return false;
+        }
+
+    }
+
     private boolean create_local_pref(String uname , String pass){
 
         try {
