@@ -14,6 +14,13 @@ public class CreateDatabaseUsingHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
+        sqLiteDatabase.execSQL(DatabaseFunctions.createDepartmentTable());
+        sqLiteDatabase.execSQL(DatabaseFunctions.createSubDepartmentTable());
+        sqLiteDatabase.execSQL(DatabaseFunctions.createUserTable());
+        sqLiteDatabase.execSQL(DatabaseFunctions.createMessageTable());
+        sqLiteDatabase.execSQL(DatabaseFunctions.createCircularTable());
+        sqLiteDatabase.execSQL(DatabaseFunctions.createAttachmentTable());
+
     }
 
     @Override

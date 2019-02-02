@@ -34,7 +34,7 @@ public class Login extends AppCompatActivity {
     private boolean create_local_database(){
 
         try{
-            getApplication().deleteDatabase("");
+
             return true;
 
         }catch(Exception e){
