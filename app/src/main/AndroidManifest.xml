@@ -28,7 +28,8 @@
             android:label="@string/title_activity_home_nav"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddDepartment" />
-        <activity android:name=".NewCircular"></activity>
+        <activity android:name=".NewCircular" />
+        <activity android:name=".AddSubDepartment"></activity>
     </application>
 
 </manifest>
