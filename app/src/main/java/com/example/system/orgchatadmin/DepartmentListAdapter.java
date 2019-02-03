@@ -1,13 +1,29 @@
 package com.example.system.orgchatadmin;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class DepartmentListAdapter extends BaseAdapter {
+
+    Context c;
+    Map<String,String> content;
+
+    DepartmentListAdapter(Context c , Map<String,String> content){
+
+        this.c = c;
+        this.content = content;
+
+    }
+
     @Override
     public int getCount() {
-        return 0;
+        return content.size();
     }
 
     @Override

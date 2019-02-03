@@ -13,8 +13,17 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class DepartmentFragment extends Fragment {
+
+    View root;
+    ListView dept;
+    Button add;
+    DepartmentListAdapter adapter;
+    Map<String,String> content;
 
     public DepartmentFragment() {
         // Required empty public constructor
@@ -30,10 +39,14 @@ public class DepartmentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_department, container, false);
+        root = inflater.inflate(R.layout.fragment_department, container, false);
 
-        ListView dept = (ListView)root.findViewById(R.id.dept_list);
-        Button add = (Button)root.findViewById(R.id.add_dept);
+        dept = (ListView)root.findViewById(R.id.dept_list);
+        add = (Button)root.findViewById(R.id.add_dept);
+        content = new HashMap<String,String>();
+
+        adapter = new DepartmentListAdapter(getContext(),content);
+
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
