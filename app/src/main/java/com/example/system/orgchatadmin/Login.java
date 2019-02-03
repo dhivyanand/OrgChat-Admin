@@ -35,6 +35,8 @@ public class Login extends AppCompatActivity {
 
         try{
 
+            CreateDatabaseUsingHelper db = new CreateDatabaseUsingHelper(getApplicationContext());
+            db.getWritableDatabase();
             return true;
 
         }catch(Exception e){
@@ -78,7 +80,7 @@ public class Login extends AppCompatActivity {
 
                 String uname = username.getText().toString() , pass = password.getText().toString();
 
-                if (uname != null && pass != null) {
+                if (uname != "" && pass != "") {
 
                     if(verify_admin(uname,pass)){
 

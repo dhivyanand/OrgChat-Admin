@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class CreateDatabaseUsingHelper extends SQLiteOpenHelper {
 
     public CreateDatabaseUsingHelper(Context context) {
-        super(context, "org_chat_db", null, 1);
+        super(context, "org_chat_db.db", null, 1);
     }
 
     @Override
@@ -25,6 +25,15 @@ public class CreateDatabaseUsingHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
+        sqLiteDatabase.execSQL("DROP TABLE DEPARTMENT");
+        sqLiteDatabase.execSQL("DROP TABLE SUBDEPARTMENT");
+        sqLiteDatabase.execSQL("DROP TABLE USER");
+        sqLiteDatabase.execSQL("DROP TABLE MESSAGE");
+        sqLiteDatabase.execSQL("DROP TABLE CIRCULAR");
+        sqLiteDatabase.execSQL("DROP TABLE ATTACHMENT");
+
+        onCreate(sqLiteDatabase);
 
     }
 }
