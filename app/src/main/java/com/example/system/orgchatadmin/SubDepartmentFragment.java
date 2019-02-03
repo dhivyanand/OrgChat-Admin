@@ -48,7 +48,7 @@ public class SubDepartmentFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                startActivity(new Intent(getActivity(),AddDepartment.class));
+                startActivity(new Intent(getActivity(),AddSubDepartment.class));
 
             }
         });

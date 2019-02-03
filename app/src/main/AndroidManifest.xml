@@ -29,7 +29,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddDepartment" />
         <activity android:name=".NewCircular" />
-        <activity android:name=".AddSubDepartment"></activity>
+        <activity android:name=".AddSubDepartment" />
+        <activity android:name=".SubDepartmentMessageActivity"></activity>
     </application>
 
 </manifest>
