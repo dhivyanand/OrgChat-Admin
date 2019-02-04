@@ -30,7 +30,8 @@
         <activity android:name=".AddDepartment" />
         <activity android:name=".NewCircular" />
         <activity android:name=".AddSubDepartment" />
-        <activity android:name=".SubDepartmentMessageActivity"></activity>
+        <activity android:name=".SubDepartmentMessageActivity" />
+        <activity android:name=".MessageActivity"></activity>
     </application>
 
 </manifest>
