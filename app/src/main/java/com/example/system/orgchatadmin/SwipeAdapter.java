@@ -12,11 +12,20 @@ public class SwipeAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+
+        switch(position){
+
+            case 0:
+                return new SuggestionSwipeFragment();
+            case 1:
+                return new CompliantSwipeFragment();
+
+        }
         return null;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return 2;
     }
 }
