@@ -8,6 +8,7 @@ import android.widget.GridView;
 
 public class NewCircular extends AppCompatActivity {
 
+    AttachmentAdapter adapter;
     Button post;
     EditText title,description;
     GridView attachment;
