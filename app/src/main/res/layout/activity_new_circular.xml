@@ -71,6 +71,9 @@
         android:layout_below="@+id/space12"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:elevation="10dp"
         android:background="@drawable/attachment_bg" />
 
     <Button
