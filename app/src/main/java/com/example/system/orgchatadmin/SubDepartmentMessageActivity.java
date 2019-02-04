@@ -3,15 +3,14 @@ package com.example.system.orgchatadmin;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class SubDepartmentMessageActivity extends FragmentActivity implements
+public class SubDepartmentMessageActivity extends AppCompatActivity implements
         ActionBar.TabListener {
 
-    android.app.ActionBar actionBar;
+    ActionBar actionBar;
     SwipeAdapter swipeAdapter;
     ViewPager pager;
 
@@ -22,7 +21,7 @@ public class SubDepartmentMessageActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_department_message);
 
-        actionBar = getActionBar();
+        actionBar = getSupportActionBar();
         swipeAdapter = new SwipeAdapter(getSupportFragmentManager());
         pager = (ViewPager)findViewById(R.id.viewPager);
 
@@ -33,6 +32,7 @@ public class SubDepartmentMessageActivity extends FragmentActivity implements
         for (String tab_name : tabs) {
             actionBar.addTab(actionBar.newTab().setText(tab_name)
                     .setTabListener(SubDepartmentMessageActivity.this));
+
         }
 
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -56,17 +56,17 @@ public class SubDepartmentMessageActivity extends FragmentActivity implements
     }
 
     @Override
-    public void onTabSelected(Tab tab, android.app.FragmentTransaction fragmentTransaction) {
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
 
     }
 
     @Override
-    public void onTabUnselected(Tab tab, android.app.FragmentTransaction fragmentTransaction) {
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
     }
 
     @Override
-    public void onTabReselected(Tab tab, android.app.FragmentTransaction fragmentTransaction) {
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
     }
 }

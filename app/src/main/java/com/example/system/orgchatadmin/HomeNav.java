@@ -106,7 +106,6 @@ public class HomeNav extends AppCompatActivity
         } else if (id == R.id.nav_server_settings) {
 
             getSupportActionBar().setTitle("Server");
-
         }
 
         if (fragment != null) {
