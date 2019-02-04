@@ -24,27 +24,6 @@ public class AttachmentAdapter extends BaseAdapter {
     Context c;
     ArrayList<Uri> attachment;
 
-    private Bitmap thumbnailFromPath(Uri uri){
-
-        Bitmap thumbImage = ThumbnailUtils.extractThumbnail(
-                BitmapFactory.decodeFile(uri.getPath()),
-                128,
-                128);
-
-        return thumbImage;
-    }
-
-    private boolean isVideo(Uri uri){
-
-        String type = c.getContentResolver().getType(uri);
-
-        if(type.startsWith("video"))
-            return true;
-        else
-            return false;
-
-    }
-
     AttachmentAdapter(Context c, ArrayList<Uri> attachment){
 
         this.c = c;

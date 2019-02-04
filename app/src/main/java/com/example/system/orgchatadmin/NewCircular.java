@@ -1,5 +1,9 @@
 package com.example.system.orgchatadmin;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -12,6 +16,27 @@ public class NewCircular extends AppCompatActivity {
     Button post;
     EditText title,description;
     GridView attachment;
+
+    private Bitmap thumbnailFromPath(Uri uri){
+
+        Bitmap thumbImage = ThumbnailUtils.extractThumbnail(
+                BitmapFactory.decodeFile(uri.getPath()),
+                128,
+                128);
+
+        return thumbImage;
+    }
+
+    private boolean isVideo(Uri uri){
+
+        String type = getApplication().getContentResolver().getType(uri);
+
+        if(type.startsWith("video"))
+            return true;
+        else
+            return false;
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
