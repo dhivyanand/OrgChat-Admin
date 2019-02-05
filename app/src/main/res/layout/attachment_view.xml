@@ -11,10 +11,10 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/attachment_view_bg"
+        android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         app:srcCompat="@drawable/ic_attachment" />
 
     <ImageView

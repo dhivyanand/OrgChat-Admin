@@ -22,9 +22,9 @@ import java.util.Map;
 public class AttachmentAdapter extends BaseAdapter {
 
     Context c;
-    ArrayList<Uri> attachment;
+    ArrayList<View> attachment;
 
-    AttachmentAdapter(Context c, ArrayList<Uri> attachment){
+    AttachmentAdapter(Context c, ArrayList<View> attachment){
 
         this.c = c;
         this.attachment = attachment;
@@ -49,24 +49,7 @@ public class AttachmentAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        LayoutInflater inflater = (LayoutInflater) c
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View root = inflater.inflate(R.layout.attachment_view,null);
-
-        Uri uri = attachment.get(i);
-
-        ImageView link , play;
-
-        link = (ImageView)root.findViewById(R.id.link);
-        play = (ImageView)root.findViewById(R.id.play);
-
-        link.setImageBitmap(thumbnailFromPath(uri));
-
-        if(isVideo(uri))
-            play.setVisibility(View.VISIBLE);
-        else
-            play.setVisibility(View.INVISIBLE);
+        View root = attachment.get(0);
 
         return root;
     }
