@@ -64,7 +64,7 @@ public class NewCircular extends AppCompatActivity {
         is_video = new ArrayList<Boolean>();
         path = new ArrayList<String>();
 
-        adapter = new AttachmentAdapter(NewCircular.this,view);
+        adapter = new AttachmentAdapter(NewCircular.this,thumbnail,is_video,path);
 
         attachment.setAdapter(adapter);
 
