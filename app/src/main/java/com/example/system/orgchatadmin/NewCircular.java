@@ -60,6 +60,10 @@ public class NewCircular extends AppCompatActivity {
         description = (EditText)findViewById(R.id.circular_description);
         attachment = (ListView)findViewById(R.id.attachment_list);
 
+        thumbnail = new ArrayList<Bitmap>();
+        is_video = new ArrayList<Boolean>();
+        path = new ArrayList<String>();
+
         adapter = new AttachmentAdapter(NewCircular.this,view);
 
         attachment.setAdapter(adapter);

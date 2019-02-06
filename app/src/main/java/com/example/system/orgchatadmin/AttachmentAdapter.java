@@ -22,18 +22,22 @@ import java.util.Map;
 public class AttachmentAdapter extends BaseAdapter {
 
     Context c;
-    Map<Bitmap,Boolean> attachment;
+    ArrayList<Bitmap> thumbnail;
+    ArrayList<Boolean> is_video;
+    ArrayList<String> path;
 
-    AttachmentAdapter(Context c, Map<Bitmap,Boolean> attachment){
+    AttachmentAdapter(Context c, ArrayList<Bitmap> thumbnail, ArrayList<Boolean> is_video, ArrayList<String> path){
 
         this.c = c;
-        this.attachment = attachment;
+        this.thumbnail = thumbnail;
+        this.is_video = is_video;
+        this.path = path;
 
     }
 
     @Override
     public int getCount() {
-        return attachment.size();
+        return path.size();
     }
 
     @Override
