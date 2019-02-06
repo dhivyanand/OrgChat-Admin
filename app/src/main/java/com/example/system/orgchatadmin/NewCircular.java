@@ -25,7 +25,9 @@ public class NewCircular extends AppCompatActivity {
     Button post;
     EditText title,description;
     ListView attachment;
-    Map<Bitmap,Boolean> view;
+    ArrayList<Bitmap> thumbnail;
+    ArrayList<Boolean> is_video;
+    ArrayList<String> path;
 
     private Bitmap thumbnailFromPath(Uri uri){
 
@@ -57,8 +59,6 @@ public class NewCircular extends AppCompatActivity {
         title = (EditText)findViewById(R.id.circular_title);
         description = (EditText)findViewById(R.id.circular_description);
         attachment = (ListView)findViewById(R.id.attachment_list);
-
-        view = new HashMap<Bitmap,Boolean>();
 
         adapter = new AttachmentAdapter(NewCircular.this,view);
 
