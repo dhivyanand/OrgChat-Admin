@@ -29,6 +29,11 @@ public class NewCircular extends AppCompatActivity {
     ArrayList<Boolean> is_video;
     ArrayList<String> path;
 
+    private boolean notEmpty(ArrayList<Bitmap> thumbnail, ArrayList<Boolean> is_video, ArrayList<String> path){
+
+        return thumbnail != null && is_video != null && path != null;
+    }
+
     private Bitmap thumbnailFromPath(Uri uri){
 
         Bitmap thumbImage = ThumbnailUtils.extractThumbnail(

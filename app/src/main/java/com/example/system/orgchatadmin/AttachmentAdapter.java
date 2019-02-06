@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.net.FileNameMap;
@@ -25,6 +26,8 @@ public class AttachmentAdapter extends BaseAdapter {
     ArrayList<Bitmap> thumbnail;
     ArrayList<Boolean> is_video;
     ArrayList<String> path;
+    TextView name;
+    ImageView thumb;
     View root;
 
     AttachmentAdapter(Context c, ArrayList<Bitmap> thumbnail, ArrayList<Boolean> is_video, ArrayList<String> path){
@@ -57,6 +60,15 @@ public class AttachmentAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         root = inflater.inflate(R.layout.attachment_view,null);
 
-        return view;
+        name = (TextView)root.findViewById(R.id.name);
+        thumb = (ImageView)root.findViewById(R.id.thumb);
+
+        if(thumbnail.get(i) != null)
+            thumb.setImageBitmap(thumbnail.get(i));
+
+        if(path.get(i) != null)
+            name.setText(path.get(i));
+
+        return root;
     }
 }
