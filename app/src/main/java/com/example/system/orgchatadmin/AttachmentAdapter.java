@@ -22,9 +22,9 @@ import java.util.Map;
 public class AttachmentAdapter extends BaseAdapter {
 
     Context c;
-    ArrayList<View> attachment;
+    Map<Bitmap,Boolean> attachment;
 
-    AttachmentAdapter(Context c, ArrayList<View> attachment){
+    AttachmentAdapter(Context c, Map<Bitmap,Boolean> attachment){
 
         this.c = c;
         this.attachment = attachment;
@@ -49,8 +49,6 @@ public class AttachmentAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        View root = attachment.get(0);
-
-        return root;
+        return view;
     }
 }

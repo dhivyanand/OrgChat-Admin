@@ -61,19 +61,17 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true" />
 
-    <GridView
+    <ListView
         android:id="@+id/attachment_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/space14"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/space12"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:numColumns="auto_fit"
+        android:layout_gravity="center"
         android:elevation="10dp"
         android:background="@drawable/attachment_bg" />
 
