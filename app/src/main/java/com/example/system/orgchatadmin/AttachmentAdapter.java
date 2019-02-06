@@ -25,6 +25,7 @@ public class AttachmentAdapter extends BaseAdapter {
     ArrayList<Bitmap> thumbnail;
     ArrayList<Boolean> is_video;
     ArrayList<String> path;
+    View root;
 
     AttachmentAdapter(Context c, ArrayList<Bitmap> thumbnail, ArrayList<Boolean> is_video, ArrayList<String> path){
 
@@ -52,6 +53,9 @@ public class AttachmentAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+
+        LayoutInflater inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        root = inflater.inflate(R.layout.attachment_view,null);
 
         return view;
     }
