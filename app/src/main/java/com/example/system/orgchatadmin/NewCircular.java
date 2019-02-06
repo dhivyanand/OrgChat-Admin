@@ -1,5 +1,6 @@
 package com.example.system.orgchatadmin;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +18,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +31,7 @@ public class NewCircular extends AppCompatActivity {
     EditText title,description;
     ImageButton add;
     ListView attachment;
+    TextView empty;
     ArrayList<Bitmap> thumbnail;
     ArrayList<Boolean> is_video;
     ArrayList<String> path;
@@ -49,9 +52,22 @@ public class NewCircular extends AppCompatActivity {
         // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
         // To search for all documents available via installed storage providers,
         // it would be "*/*".
-        intent.setType("image/*");
+        intent.setType("*/*");
 
         startActivityForResult(intent, READ_REQUEST_CODE);
+    }
+
+    private void populate_adapter(Bitmap thumb , String uri , Boolean isVideo){
+
+        if(notEmpty(thumbnail, is_video, path)){
+            thumbnail.add(thumb);
+            is_video.add(isVideo);
+            path.add(uri);
+
+            adapter.notifyDataSetChanged();
+
+        }
+
     }
 
     private boolean notEmpty(ArrayList<Bitmap> thumbnail, ArrayList<Boolean> is_video, ArrayList<String> path){
@@ -63,8 +79,8 @@ public class NewCircular extends AppCompatActivity {
 
         Bitmap thumbImage = ThumbnailUtils.extractThumbnail(
                 BitmapFactory.decodeFile(uri.getPath()),
-                getSupportActionBar().getHeight(),
-                getSupportActionBar().getHeight());
+                128,
+                128);
 
         return thumbImage;
     }
@@ -90,6 +106,7 @@ public class NewCircular extends AppCompatActivity {
         description = (EditText)findViewById(R.id.circular_description);
         attachment = (ListView)findViewById(R.id.attachment_list);
         add = (ImageButton)findViewById(R.id.add);
+        empty = (TextView)findViewById(R.id.empty);
 
         thumbnail = new ArrayList<Bitmap>();
         is_video = new ArrayList<Boolean>();
@@ -105,10 +122,32 @@ public class NewCircular extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
+                performFileSearch();
 
             }
         });
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent resultData) {
+
+        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+            Uri uri = null;
+            if (resultData != null) {
+                uri = resultData.getData();
+
+                Bitmap b = thumbnailFromPath(uri);
+                String path = uri.toString();
+                Boolean isVideo = isVideo(uri);
+
+                populate_adapter(b,path,isVideo);
+
+            }
+        }
+    }
+
+
 }

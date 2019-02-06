@@ -97,4 +97,13 @@
         android:elevation="10dp"
         app:srcCompat="@android:drawable/ic_input_add" />
 
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/attachment_list"
+        android:layout_centerHorizontal="true"
+        android:elevation="10dp"
+        android:text="Attachments" />
+
 </RelativeLayout>

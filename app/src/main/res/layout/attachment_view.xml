@@ -5,11 +5,10 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/attachment_bg"
-    android:layout_marginBottom="10dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginTop="10dp"
-    android:elevation="12dp">
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
     <TextView
         android:id="@+id/name"
@@ -46,5 +45,7 @@
         android:layout_marginRight="23dp"
         android:layout_toLeftOf="@+id/name"
         android:layout_toStartOf="@+id/name"
+        android:minHeight="?android:attr/actionBarSize"
+        android:minWidth="?android:attr/actionBarSize"
         app:srcCompat="@drawable/ic_video" />
 </RelativeLayout>
