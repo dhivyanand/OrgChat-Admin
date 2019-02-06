@@ -36,4 +36,15 @@
         android:paddingRight="10dp"
         android:paddingTop="10dp"
         app:srcCompat="@drawable/ic_attachment" />
+
+    <ImageView
+        android:id="@+id/video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="23dp"
+        android:layout_marginRight="23dp"
+        android:layout_toLeftOf="@+id/name"
+        android:layout_toStartOf="@+id/name"
+        app:srcCompat="@drawable/ic_video" />
 </RelativeLayout>

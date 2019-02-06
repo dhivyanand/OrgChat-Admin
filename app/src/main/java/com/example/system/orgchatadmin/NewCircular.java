@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -38,8 +39,8 @@ public class NewCircular extends AppCompatActivity {
 
         Bitmap thumbImage = ThumbnailUtils.extractThumbnail(
                 BitmapFactory.decodeFile(uri.getPath()),
-                128,
-                128);
+                getSupportActionBar().getHeight(),
+                getSupportActionBar().getHeight());
 
         return thumbImage;
     }
