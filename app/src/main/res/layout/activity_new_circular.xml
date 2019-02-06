@@ -86,4 +86,15 @@
         android:elevation="10dp"
         android:text="Post" />
 
+    <ImageButton
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/attachment_list"
+        android:layout_alignEnd="@+id/attachment_list"
+        android:layout_alignRight="@+id/attachment_list"
+        android:background="@android:color/transparent"
+        android:elevation="10dp"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
 </RelativeLayout>

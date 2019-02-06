@@ -76,6 +76,5 @@ public class NewCircular extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
 
-
     }
 }
