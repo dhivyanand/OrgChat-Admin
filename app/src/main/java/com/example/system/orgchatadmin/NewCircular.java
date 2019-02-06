@@ -16,29 +16,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NewCircular extends AppCompatActivity {
 
     AttachmentAdapter adapter;
-    ArrayList<View> list;
     Button post;
     EditText title,description;
     ListView attachment;
-
-    private void create_attachment_view(){
-
-        View add = getLayoutInflater().inflate(R.layout.attachment_view,null);
-
-        ImageView img = (ImageView)add.findViewById(R.id.link);
-        img.setLayoutParams(new ViewGroup.LayoutParams(85, 85));
-        img.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        img.setPadding(8, 8, 8, 8);
-
-        list.add(add);
-
-        adapter.notifyDataSetChanged();
-
-    }
+    Map<Bitmap,Boolean> view;
 
     private Bitmap thumbnailFromPath(Uri uri){
 
@@ -71,17 +58,11 @@ public class NewCircular extends AppCompatActivity {
         description = (EditText)findViewById(R.id.circular_description);
         attachment = (ListView)findViewById(R.id.attachment_list);
 
-        list = new ArrayList<View>();
+        view = new HashMap<Bitmap,Boolean>();
 
-        adapter = new AttachmentAdapter(NewCircular.this,list);
+        adapter = new AttachmentAdapter(NewCircular.this,view);
 
         attachment.setAdapter(adapter);
-
-        View add = getLayoutInflater().inflate(R.layout.attachment_view,null);
-        //add.setLayoutParams(new ViewGroup.LayoutParams(attachment.getWidth(), attachment.getHeight()));
-        View a = getLayoutInflater().inflate(R.layout.attachment_view,null);
-        list.add(add);
-        //list.add(a);
 
         adapter.notifyDataSetChanged();
 
