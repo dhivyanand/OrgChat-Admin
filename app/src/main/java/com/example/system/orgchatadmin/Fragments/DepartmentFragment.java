@@ -3,9 +3,11 @@ package com.example.system.orgchatadmin.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -56,9 +58,9 @@ public class DepartmentFragment extends Fragment {
             }
         });
 
-        dept.setOnClickListener(new View.OnClickListener() {
+        dept.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
             }
         });
