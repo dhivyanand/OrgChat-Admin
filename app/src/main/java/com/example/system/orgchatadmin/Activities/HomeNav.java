@@ -1,11 +1,8 @@
-package com.example.system.orgchatadmin;
+package com.example.system.orgchatadmin.Activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,7 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+
+import com.example.system.orgchatadmin.Fragments.CircularFragment;
+import com.example.system.orgchatadmin.Fragments.CompliantFragment;
+import com.example.system.orgchatadmin.Fragments.DepartmentFragment;
+import com.example.system.orgchatadmin.R;
+import com.example.system.orgchatadmin.Fragments.SuggestionFragment;
+import com.example.system.orgchatadmin.Fragments.UserFragment;
 
 public class HomeNav extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

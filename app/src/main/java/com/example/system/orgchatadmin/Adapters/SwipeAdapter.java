@@ -1,12 +1,15 @@
-package com.example.system.orgchatadmin;
+package com.example.system.orgchatadmin.Adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.system.orgchatadmin.Fragments.CompliantSwipeFragment;
+import com.example.system.orgchatadmin.Fragments.SuggestionSwipeFragment;
+
 public class SwipeAdapter extends FragmentPagerAdapter {
 
-    SwipeAdapter(FragmentManager fm){
+    public SwipeAdapter(FragmentManager fm){
         super(fm);
     }
 

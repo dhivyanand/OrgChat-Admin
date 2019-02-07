@@ -1,11 +1,13 @@
-package com.example.system.orgchatadmin;
+package com.example.system.orgchatadmin.Activities;
 
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.system.orgchatadmin.R;
+import com.example.system.orgchatadmin.Adapters.SwipeAdapter;
 
 public class SubDepartmentMessageActivity extends AppCompatActivity implements
         ActionBar.TabListener {

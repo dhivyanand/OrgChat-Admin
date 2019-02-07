@@ -1,4 +1,4 @@
-package com.example.system.orgchatadmin;
+package com.example.system.orgchatadmin.Database;
 
 public class DatabaseFunctions {
 

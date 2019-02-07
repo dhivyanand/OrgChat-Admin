@@ -1,7 +1,9 @@
-package com.example.system.orgchatadmin;
+package com.example.system.orgchatadmin.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.system.orgchatadmin.R;
 
 public class MessageActivity extends AppCompatActivity {
 

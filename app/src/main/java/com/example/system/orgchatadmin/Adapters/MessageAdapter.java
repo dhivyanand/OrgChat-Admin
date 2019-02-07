@@ -1,4 +1,4 @@
-package com.example.system.orgchatadmin;
+package com.example.system.orgchatadmin.Adapters;
 
 import android.view.View;
 import android.view.ViewGroup;

@@ -1,4 +1,4 @@
-package com.example.system.orgchatadmin;
+package com.example.system.orgchatadmin.Adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,7 +14,7 @@ public class DepartmentListAdapter extends BaseAdapter {
     Context c;
     Map<String,String> content;
 
-    DepartmentListAdapter(Context c , Map<String,String> content){
+    public DepartmentListAdapter(Context c, Map<String, String> content){
 
         this.c = c;
         this.content = content;

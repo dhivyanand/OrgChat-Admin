@@ -1,4 +1,4 @@
-package com.example.system.orgchatadmin;
+package com.example.system.orgchatadmin.Adapters;
 
 import android.app.ActionBar;
 import android.content.ContentResolver;
@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.system.orgchatadmin.R;
+
 import java.io.File;
 import java.net.FileNameMap;
 import java.net.URL;
@@ -32,7 +34,7 @@ public class AttachmentAdapter extends BaseAdapter {
     ImageView thumb, video;
     View root;
 
-    AttachmentAdapter(Context c, ArrayList<Bitmap> thumbnail, ArrayList<Boolean> is_video, ArrayList<String> path){
+    public AttachmentAdapter(Context c, ArrayList<Bitmap> thumbnail, ArrayList<Boolean> is_video, ArrayList<String> path){
 
         this.c = c;
         this.thumbnail = thumbnail;

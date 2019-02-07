@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.system.orgchatadmin.UserFragment">
+    tools:context="com.example.system.orgchatadmin.Fragments.UserFragment">
 
     <Button
         android:id="@+id/add_user"

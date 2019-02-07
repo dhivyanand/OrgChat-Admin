@@ -1,13 +1,15 @@
-package com.example.system.orgchatadmin;
+package com.example.system.orgchatadmin.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class AddSubDepartment extends AppCompatActivity {
+import com.example.system.orgchatadmin.R;
+
+public class Logout extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_sub_department);
+        setContentView(R.layout.activity_logout);
     }
 }
