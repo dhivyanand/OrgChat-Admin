@@ -56,6 +56,13 @@ public class DepartmentFragment extends Fragment {
             }
         });
 
+        dept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         return root;
     }
 
