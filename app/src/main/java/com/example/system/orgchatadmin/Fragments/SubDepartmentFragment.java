@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -51,6 +52,13 @@ public class SubDepartmentFragment extends Fragment {
             public void onClick(View view) {
 
                 startActivity(new Intent(getActivity(),AddSubDepartment.class));
+
+            }
+        });
+
+        dept.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
             }
         });
