@@ -1,6 +1,9 @@
 package com.example.system.orgchatadmin.Fragments;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,9 +18,12 @@ import com.example.system.orgchatadmin.Activities.AddDepartment;
 import com.example.system.orgchatadmin.Adapters.DepartmentListAdapter;
 import com.example.system.orgchatadmin.R;
 
+import java.io.IOError;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class DepartmentFragment extends Fragment {
@@ -26,7 +32,7 @@ public class DepartmentFragment extends Fragment {
     ListView dept;
     Button add;
     DepartmentListAdapter adapter;
-    Map<String,String> content;
+    ArrayList<String> content;
 
     public DepartmentFragment() {
         // Required empty public constructor
@@ -35,18 +41,40 @@ public class DepartmentFragment extends Fragment {
     ArrayList<String> fetch_local_department(){
 
         ArrayList<String> list = new ArrayList<String>();
+
+        try {
+
+            SQLiteDatabase mydatabase = getContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
+
+            Cursor resultSet = mydatabase.rawQuery("Select * from DEPARTMENT",null);
+
+            if(resultSet.moveToFirst()) {
+
+                do {
+
+                    String dept = resultSet.getString(0);
+                    list.add(dept);
+
+                } while (resultSet.moveToNext());
+
+            }
+
+            resultSet.close();
+            mydatabase.close();
+
+        }catch(SQLException e){
+
+        }
+
         return list;
 
     }
 
-    ArrayList<String> fetch_local_department_message_count(){
+    void departmentList(ListView dept){
 
-        ArrayList<String> list = new ArrayList<String>();
-        return list;
-
-    }
-
-    void departmentList(DepartmentListAdapter adapter){
+        content = fetch_local_department();
+        adapter = new DepartmentListAdapter(getContext(),content);
+        dept.setAdapter(adapter);
 
     }
 
@@ -64,9 +92,6 @@ public class DepartmentFragment extends Fragment {
 
         dept = (ListView)root.findViewById(R.id.dept_list);
         add = (Button)root.findViewById(R.id.add_dept);
-        content = new HashMap<String,String>();
-
-        adapter = new DepartmentListAdapter(getContext(),content);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +108,8 @@ public class DepartmentFragment extends Fragment {
 
             }
         });
+
+        departmentList(dept);
 
         return root;
     }

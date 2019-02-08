@@ -14,9 +14,9 @@ import java.util.Map;
 public class DepartmentListAdapter extends BaseAdapter {
 
     Context c;
-    Map<String,String> content;
+    ArrayList<String> content;
 
-    public DepartmentListAdapter(Context c, Map<String, String> content){
+    public DepartmentListAdapter(Context c, ArrayList<String> content){
 
         this.c = c;
         this.content = content;
