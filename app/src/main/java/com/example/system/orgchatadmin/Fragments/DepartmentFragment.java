@@ -31,6 +31,10 @@ public class DepartmentFragment extends Fragment {
         // Required empty public constructor
     }
 
+    void fetch_local_department(){
+
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
