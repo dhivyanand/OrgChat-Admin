@@ -15,6 +15,7 @@ import com.example.system.orgchatadmin.Activities.AddDepartment;
 import com.example.system.orgchatadmin.Adapters.DepartmentListAdapter;
 import com.example.system.orgchatadmin.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +32,17 @@ public class DepartmentFragment extends Fragment {
         // Required empty public constructor
     }
 
-    void fetch_local_department(){
+    ArrayList<String> fetch_local_department(){
+
+        ArrayList<String> list = new ArrayList<String>();
+        return list;
+
+    }
+
+    ArrayList<String> fetch_local_department_message_count(){
+
+        ArrayList<String> list = new ArrayList<String>();
+        return list;
 
     }
 
