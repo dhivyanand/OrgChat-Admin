@@ -14,6 +14,8 @@ import android.widget.ListView;
 import com.example.system.orgchatadmin.Adapters.DepartmentListAdapter;
 import com.example.system.orgchatadmin.R;
 
+import java.util.ArrayList;
+
 public class AddDepartment extends AppCompatActivity {
 
     Button cancel , done;
@@ -21,6 +23,7 @@ public class AddDepartment extends AppCompatActivity {
     ImageButton verify , add;
     ListView list;
 
+    ArrayList<String> sub_dept_list;
     DepartmentListAdapter adapter;
 
     boolean check_sub_department(String sub_department){
@@ -69,6 +72,10 @@ public class AddDepartment extends AppCompatActivity {
         verify = (ImageButton)findViewById(R.id.verify);
         add = (ImageButton)findViewById(R.id.add_sub_dept);
         list = (ListView)findViewById(R.id.list_user);
+
+        sub_dept_list = new ArrayList<String>();
+        adapter = new DepartmentListAdapter(getApplication(), sub_dept_list);
+        list.setAdapter(adapter);
 
         sub_dept.setEnabled(false);
         add.setEnabled(false);
