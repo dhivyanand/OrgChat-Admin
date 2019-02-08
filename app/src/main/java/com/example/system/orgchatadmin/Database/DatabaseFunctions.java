@@ -34,7 +34,7 @@ public class DatabaseFunctions {
 
     public static String createDateTable(){
 
-        return "CREATE TABLE DATE (TYPE VARCHAR , LAST_UPDATE VARCHAR)";
+        return "CREATE TABLE DATE (TYPE VARCHAR , LAST_UPDATE VARCHAR , COUNT INT)";
     }
 
 }
