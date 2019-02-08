@@ -32,4 +32,9 @@ public class DatabaseFunctions {
         return "CREATE TABLE CIRCULAR (CIRCULAR_ID VARCHAR , TITLE VARCHAR , MESSAGE VARCHAR , DATE VARCHAR , TIME VARCHAR)";
     }
 
+    public static String createDateTable(){
+
+        return "CREATE TABLE DATE (TYPE VARCHAR , LAST_UPDATE VARCHAR)";
+    }
+
 }
