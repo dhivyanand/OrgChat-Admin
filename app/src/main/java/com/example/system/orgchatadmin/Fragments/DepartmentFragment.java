@@ -46,7 +46,7 @@ public class DepartmentFragment extends Fragment {
 
     }
 
-    void departmentList(){
+    void departmentList(DepartmentListAdapter adapter){
 
     }
 
