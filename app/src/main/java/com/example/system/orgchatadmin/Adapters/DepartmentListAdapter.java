@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class DepartmentListAdapter extends BaseAdapter {
@@ -19,6 +21,10 @@ public class DepartmentListAdapter extends BaseAdapter {
         this.c = c;
         this.content = content;
 
+    }
+
+    public Object getElementByIndex(HashMap map, int index){
+        return map.get( (map.keySet().toArray())[ index ] );
     }
 
     @Override

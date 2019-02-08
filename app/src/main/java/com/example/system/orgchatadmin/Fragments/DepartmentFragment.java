@@ -46,6 +46,10 @@ public class DepartmentFragment extends Fragment {
 
     }
 
+    void departmentList(){
+
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
