@@ -14,6 +14,7 @@ import com.example.system.orgchatadmin.Activities.AddSubDepartment;
 import com.example.system.orgchatadmin.Adapters.DepartmentListAdapter;
 import com.example.system.orgchatadmin.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ public class SubDepartmentFragment extends Fragment {
     ListView dept;
     Button add;
     DepartmentListAdapter adapter;
-    Map<String,String> content;
+    ArrayList<String> content;
 
     public SubDepartmentFragment() {
         // Required empty public constructor
@@ -43,7 +44,7 @@ public class SubDepartmentFragment extends Fragment {
 
         dept = (ListView)root.findViewById(R.id.dept_list);
         add = (Button)root.findViewById(R.id.add_dept);
-        content = new HashMap<String,String>();
+        content = new ArrayList<String>();
 
         adapter = new DepartmentListAdapter(getContext(),content);
 

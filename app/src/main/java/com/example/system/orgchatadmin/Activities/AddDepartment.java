@@ -17,6 +17,11 @@ public class AddDepartment extends AppCompatActivity {
     ImageButton verify , add;
     ListView list;
 
+    boolean not_already_available(String department){
+
+        return false;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +59,8 @@ public class AddDepartment extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String department = dept.getText().toString();
 
             }
         });
