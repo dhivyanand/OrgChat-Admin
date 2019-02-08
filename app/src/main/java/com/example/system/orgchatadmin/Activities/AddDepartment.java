@@ -1,5 +1,6 @@
 package com.example.system.orgchatadmin.Activities;
 
+import android.database.SQLException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,9 +18,21 @@ public class AddDepartment extends AppCompatActivity {
     ImageButton verify , add;
     ListView list;
 
-    boolean not_already_available(String department){
+    boolean check_sub_department(String sub_department){
 
         return false;
+    }
+
+    boolean verify_department(String department){
+
+        try {
+
+
+
+        }catch(SQLException e){
+
+        }
+        return true;
     }
 
     @Override
@@ -34,6 +47,9 @@ public class AddDepartment extends AppCompatActivity {
         verify = (ImageButton)findViewById(R.id.verify);
         add = (ImageButton)findViewById(R.id.add_sub_dept);
         list = (ListView)findViewById(R.id.list_user);
+
+        sub_dept.setEnabled(false);
+        add.setEnabled(false);
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,14 +69,24 @@ public class AddDepartment extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                String department = dept.getText().toString();
+
+                if(verify_department(department)){
+
+                    sub_dept.setEnabled(true);
+                    add.setEnabled(true);
+                    dept.setEnabled(false);
+
+                }else{
+
+                }
+
             }
         });
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String department = dept.getText().toString();
 
             }
         });
