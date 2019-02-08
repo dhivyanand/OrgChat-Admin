@@ -1,6 +1,8 @@
 package com.example.system.orgchatadmin.Activities;
 
+import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.example.system.orgchatadmin.Adapters.DepartmentListAdapter;
 import com.example.system.orgchatadmin.R;
 
 public class AddDepartment extends AppCompatActivity {
@@ -18,9 +21,27 @@ public class AddDepartment extends AppCompatActivity {
     ImageButton verify , add;
     ListView list;
 
+    DepartmentListAdapter adapter;
+
     boolean check_sub_department(String sub_department){
 
-        return false;
+        try {
+
+            SQLiteDatabase mydatabase = openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
+
+            Cursor resultSet = mydatabase.rawQuery("Select DEPARTMENT from DEPARTMENT where DEPARTMENT = '"+sub_department+"'",null);
+
+            if(resultSet.moveToFirst())
+                return false;
+
+            resultSet.close();
+            mydatabase.close();
+
+        }catch(SQLException e){
+            return false;
+        }
+
+        return true;
     }
 
     boolean verify_department(String department){
@@ -32,6 +53,7 @@ public class AddDepartment extends AppCompatActivity {
         }catch(SQLException e){
 
         }
+
         return true;
     }
 
@@ -87,6 +109,14 @@ public class AddDepartment extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String sub_department = sub_dept.getText().toString();
+
+                if (check_sub_department(sub_department)) {
+
+
+
+                }
 
             }
         });
