@@ -3,6 +3,7 @@ package com.example.system.orgchatadmin.Database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.ContactsContract;
 
 
 public class CreateDatabaseUsingHelper extends SQLiteOpenHelper {
@@ -20,6 +21,7 @@ public class CreateDatabaseUsingHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(DatabaseFunctions.createMessageTable());
         sqLiteDatabase.execSQL(DatabaseFunctions.createCircularTable());
         sqLiteDatabase.execSQL(DatabaseFunctions.createAttachmentTable());
+        sqLiteDatabase.execSQL(DatabaseFunctions.createDateTable());
 
     }
 
@@ -32,6 +34,7 @@ public class CreateDatabaseUsingHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE MESSAGE");
         sqLiteDatabase.execSQL("DROP TABLE CIRCULAR");
         sqLiteDatabase.execSQL("DROP TABLE ATTACHMENT");
+        sqLiteDatabase.execSQL("DROP TABLE DATE");
 
         onCreate(sqLiteDatabase);
 
