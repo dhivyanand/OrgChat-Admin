@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.system.orgchatadmin.Adapters.DepartmentListAdapter;
+import com.example.system.orgchatadmin.Database.CreateDatabaseUsingHelper;
 import com.example.system.orgchatadmin.R;
 
 import java.util.ArrayList;
@@ -29,7 +30,10 @@ public class AddDepartment extends AppCompatActivity {
 
     boolean check_sub_department(String sub_department){
 
-        return true;
+        if(!sub_dept_list.contains(sub_department))
+            return true;
+        else
+            return false;
     }
 
     boolean verify_department(String department){
@@ -45,10 +49,20 @@ public class AddDepartment extends AppCompatActivity {
         return true;
     }
 
-    boolean add_sub_dept_to_local(){
+    private char add_to_server() {
 
+        String department = dept.getText().toString();
 
-        return true;
+        try{
+
+        } catch (Exception e){
+            return 'I';
+        }
+        // 'S' success
+        // 'F' Failed
+        // 'I' No internet
+
+        return 'S';
     }
 
     @Override
@@ -81,7 +95,17 @@ public class AddDepartment extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+
+                char result = add_to_server();
+
+                if(result == 'S')
+                    Toast.makeText(AddDepartment.this, "Department created successfully.", Toast.LENGTH_SHORT).show();
+                else if (result == 'F')
+                    Toast.makeText(AddDepartment.this, "Failed to create Department", Toast.LENGTH_SHORT).show();
+                else if (result == 'I')
+                    Toast.makeText(AddDepartment.this, "Unable to reach.", Toast.LENGTH_SHORT).show();
+
+
             }
         });
 
@@ -115,6 +139,8 @@ public class AddDepartment extends AppCompatActivity {
                         sub_dept_list.add(sub_department);
                         adapter.notifyDataSetChanged();
 
+                } else {
+                    Toast.makeText(AddDepartment.this, "Already available.", Toast.LENGTH_SHORT).show();
                 }
 
             }
