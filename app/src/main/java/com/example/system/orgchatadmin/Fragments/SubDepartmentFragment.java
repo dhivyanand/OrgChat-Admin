@@ -1,6 +1,8 @@
 package com.example.system.orgchatadmin.Fragments;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class SubDepartmentFragment extends Fragment {
 
@@ -26,10 +30,13 @@ public class SubDepartmentFragment extends Fragment {
     Button add;
     DepartmentListAdapter adapter;
     ArrayList<String> content;
+    String department;
 
     public SubDepartmentFragment() {
         // Required empty public constructor
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,30 @@ public class SubDepartmentFragment extends Fragment {
     ArrayList<String> fetch_local_subdepartment(){
 
         ArrayList<String> list = new ArrayList<String>();
+
+        try{
+
+            SQLiteDatabase mydatabase = getContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
+
+            Cursor resultSet = mydatabase.rawQuery("Select * from SUBDEPARTMENT where DEPARTMENT = department",null);
+
+            if(resultSet.moveToFirst()) {
+
+                do {
+
+                    String dept = resultSet.getString(0);
+                    list.add(dept);
+
+                } while (resultSet.moveToNext());
+
+            }
+
+            resultSet.close();
+            mydatabase.close();
+
+        }catch(Exception e){
+
+        }
 
         return list;
     }
