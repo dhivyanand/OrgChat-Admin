@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.system.orgchatadmin.Activities.AddDepartment;
+import com.example.system.orgchatadmin.Activities.HomeNav;
 import com.example.system.orgchatadmin.Adapters.DepartmentListAdapter;
 import com.example.system.orgchatadmin.R;
 
@@ -119,6 +120,8 @@ public class DepartmentFragment extends Fragment {
 
             }
         });
+
+        ((HomeNav)getActivity()).setActionBarTitle("Department");
 
         departmentList(dept);
 
