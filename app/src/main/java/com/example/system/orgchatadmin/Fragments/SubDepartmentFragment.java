@@ -1,5 +1,6 @@
 package com.example.system.orgchatadmin.Fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -37,7 +38,7 @@ public class SubDepartmentFragment extends Fragment {
     }
 
     public SubDepartmentFragment(String department){
-
+        this.department = department;
     }
 
     @Override
