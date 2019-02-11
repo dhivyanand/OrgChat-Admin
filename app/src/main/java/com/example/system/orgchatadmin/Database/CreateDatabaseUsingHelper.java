@@ -9,7 +9,7 @@ import android.provider.ContactsContract;
 public class CreateDatabaseUsingHelper extends SQLiteOpenHelper {
 
     public CreateDatabaseUsingHelper(Context context) {
-        super(context, "org_chat_db.db", null, 1);
+        super(context, "org_chat_db", null, 1);
     }
 
     @Override

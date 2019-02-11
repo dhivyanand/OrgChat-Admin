@@ -73,8 +73,13 @@
 
     <ListView
         android:id="@+id/list_user"
+        android:background="#FFF"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:layout_above="@+id/done"
         android:layout_below="@+id/space4"
         android:layout_centerHorizontal="true" />

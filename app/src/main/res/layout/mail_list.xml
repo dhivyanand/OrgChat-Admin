@@ -10,7 +10,7 @@
     android:elevation="10dp">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/dept"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:layout_alignParentTop="true"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/textView2"
+        android:layout_alignTop="@+id/dept"
         android:layout_marginEnd="11dp"
         android:layout_marginRight="11dp"
         android:text="TextView" />
@@ -37,17 +37,17 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2"
-        android:layout_toRightOf="@+id/textView2"
+        android:layout_alignBottom="@+id/dept"
+        android:layout_toEndOf="@+id/dept"
+        android:layout_toRightOf="@+id/dept"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignStart="@+id/textView2"
+        android:layout_alignLeft="@+id/dept"
+        android:layout_alignStart="@+id/dept"
         android:layout_below="@+id/textView6"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"

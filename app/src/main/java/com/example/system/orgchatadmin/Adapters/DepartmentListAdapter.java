@@ -2,14 +2,20 @@ package com.example.system.orgchatadmin.Adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import com.example.system.orgchatadmin.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import static java.security.AccessController.getContext;
 
 public class DepartmentListAdapter extends BaseAdapter {
 
@@ -21,10 +27,6 @@ public class DepartmentListAdapter extends BaseAdapter {
         this.c = c;
         this.content = content;
 
-    }
-
-    public Object getElementByIndex(HashMap map, int index){
-        return map.get( (map.keySet().toArray())[ index ] );
     }
 
     @Override
@@ -44,6 +46,15 @@ public class DepartmentListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        return null;
+
+        LayoutInflater layoutInflater = (LayoutInflater) c
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View root = layoutInflater.inflate(R.layout.department_list_row, viewGroup, false);
+
+        TextView subDepartment = root.findViewById(R.id.dept);
+
+        subDepartment.setText(content.get(i));
+
+        return root;
     }
 }

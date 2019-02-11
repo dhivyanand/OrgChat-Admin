@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.system.orgchatadmin.Adapters.DepartmentListAdapter;
 import com.example.system.orgchatadmin.R;
@@ -28,22 +29,6 @@ public class AddDepartment extends AppCompatActivity {
 
     boolean check_sub_department(String sub_department){
 
-        try {
-
-            SQLiteDatabase mydatabase = openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
-
-            Cursor resultSet = mydatabase.rawQuery("Select DEPARTMENT from DEPARTMENT where DEPARTMENT = '"+sub_department+"'",null);
-
-            if(resultSet.moveToFirst())
-                return false;
-
-            resultSet.close();
-            mydatabase.close();
-
-        }catch(SQLException e){
-            return false;
-        }
-
         return true;
     }
 
@@ -54,8 +39,14 @@ public class AddDepartment extends AppCompatActivity {
 
 
         }catch(SQLException e){
-
+            return false;
         }
+
+        return true;
+    }
+
+    boolean add_sub_dept_to_local(){
+
 
         return true;
     }
@@ -74,7 +65,7 @@ public class AddDepartment extends AppCompatActivity {
         list = (ListView)findViewById(R.id.list_user);
 
         sub_dept_list = new ArrayList<String>();
-        adapter = new DepartmentListAdapter(getApplication(), sub_dept_list);
+        adapter = new DepartmentListAdapter(AddDepartment.this, sub_dept_list);
         list.setAdapter(adapter);
 
         sub_dept.setEnabled(false);
@@ -107,7 +98,7 @@ public class AddDepartment extends AppCompatActivity {
                     dept.setEnabled(false);
 
                 }else{
-
+                    Toast.makeText(AddDepartment.this, "Department not satisfied.", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -121,7 +112,8 @@ public class AddDepartment extends AppCompatActivity {
 
                 if (check_sub_department(sub_department)) {
 
-
+                        sub_dept_list.add(sub_department);
+                        adapter.notifyDataSetChanged();
 
                 }
 
