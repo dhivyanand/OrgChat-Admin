@@ -1,5 +1,6 @@
 package com.example.system.orgchatadmin.Activities;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.system.orgchatadmin.Fragments.CircularFragment;
 import com.example.system.orgchatadmin.Fragments.CompliantFragment;
@@ -26,6 +28,7 @@ public class HomeNav extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_nav);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -43,6 +46,10 @@ public class HomeNav extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+
+        FragmentManager fm = getFragmentManager();
+        fm.popBackStackImmediate();
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -114,6 +121,7 @@ public class HomeNav extends AppCompatActivity
         if (fragment != null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.home_frame, fragment);
+            transaction.addToBackStack(null);
             transaction.commit();
         }
 

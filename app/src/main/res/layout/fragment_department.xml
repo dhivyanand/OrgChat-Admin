@@ -2,6 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
     tools:context="com.example.system.orgchatadmin.Fragments.DepartmentFragment">
 
     <Button
@@ -19,5 +23,6 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/add_dept"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:divider="@null" />
 </RelativeLayout>

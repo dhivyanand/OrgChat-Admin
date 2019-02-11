@@ -59,6 +59,9 @@ public class DepartmentFragment extends Fragment {
 
             }
 
+            //test
+            list.add("hi");
+
             resultSet.close();
             mydatabase.close();
 
@@ -105,6 +108,14 @@ public class DepartmentFragment extends Fragment {
         dept.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                String department = content.get(i);
+
+                Fragment subdept = new SubDepartmentFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.home_frame, subdept);
+                transaction.addToBackStack(null);
+                transaction.commit();
 
             }
         });

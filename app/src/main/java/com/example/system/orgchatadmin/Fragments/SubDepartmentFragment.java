@@ -37,6 +37,13 @@ public class SubDepartmentFragment extends Fragment {
 
     }
 
+    ArrayList<String> fetch_local_subdepartment(){
+
+        ArrayList<String> list = new ArrayList<String>();
+
+        return list;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -138,6 +138,7 @@ public class AddDepartment extends AppCompatActivity {
 
                         sub_dept_list.add(sub_department);
                         adapter.notifyDataSetChanged();
+                        sub_dept.setText("");
 
                 } else {
                     Toast.makeText(AddDepartment.this, "Already available.", Toast.LENGTH_SHORT).show();
