@@ -121,7 +121,6 @@ public class HomeNav extends AppCompatActivity
         if (fragment != null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.home_frame, fragment);
-            transaction.addToBackStack(null);
             transaction.commit();
         }
 

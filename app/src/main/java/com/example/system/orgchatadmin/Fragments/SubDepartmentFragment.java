@@ -78,6 +78,10 @@ public class SubDepartmentFragment extends Fragment {
         return list;
     }
 
+    public void subdepartment_list(){
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

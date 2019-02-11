@@ -111,7 +111,7 @@ public class DepartmentFragment extends Fragment {
 
                 String department = content.get(i);
 
-                Fragment subdept = new SubDepartmentFragment();
+                Fragment subdept = new SubDepartmentFragment(department);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.home_frame, subdept);
                 transaction.addToBackStack(null);
