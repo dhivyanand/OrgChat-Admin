@@ -36,7 +36,9 @@ public class SubDepartmentFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public SubDepartmentFragment(String department){
 
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
