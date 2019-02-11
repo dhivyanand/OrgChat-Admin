@@ -37,6 +37,7 @@ public class SubDepartmentFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @SuppressLint("ValidFragment")
     public SubDepartmentFragment(String department){
         this.department = department;
     }
@@ -80,6 +81,10 @@ public class SubDepartmentFragment extends Fragment {
 
     public void subdepartment_list(){
 
+        content = fetch_local_subdepartment();
+        adapter = new DepartmentListAdapter(getContext(),content);
+        dept.setAdapter(adapter);
+
     }
 
     @Override
@@ -90,8 +95,6 @@ public class SubDepartmentFragment extends Fragment {
         dept = (ListView)root.findViewById(R.id.dept_list);
         add = (Button)root.findViewById(R.id.add_dept);
         content = new ArrayList<String>();
-
-        adapter = new DepartmentListAdapter(getContext(),content);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +111,8 @@ public class SubDepartmentFragment extends Fragment {
 
             }
         });
+
+        subdepartment_list();
 
         return root;
     }
