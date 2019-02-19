@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.system.orgchatadmin.Activities.AddSubDepartment;
+import com.example.system.orgchatadmin.Activities.HomeNav;
 import com.example.system.orgchatadmin.Adapters.DepartmentListAdapter;
 import com.example.system.orgchatadmin.R;
 
@@ -111,6 +112,7 @@ public class SubDepartmentFragment extends Fragment {
 
             }
         });
+        ((HomeNav)getActivity()).setActionBarTitle(department);
 
         subdepartment_list();
 

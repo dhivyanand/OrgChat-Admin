@@ -73,7 +73,6 @@
 
     <ListView
         android:id="@+id/list_user"
-        android:background="#FFF"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="10dp"
@@ -82,6 +81,8 @@
         android:layout_marginTop="10dp"
         android:layout_above="@+id/done"
         android:layout_below="@+id/space4"
+        android:divider="@null"
+        android:dividerHeight="1dp"
         android:layout_centerHorizontal="true" />
 
     <Button
