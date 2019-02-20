@@ -33,7 +33,12 @@
         <activity android:name=".Activities.AddSubDepartment" />
         <activity android:name=".Activities.SubDepartmentMessageActivity" />
         <activity android:name=".Activities.MessageActivity" />
-        <activity android:name=".Activities.CircularActivity"></activity>
+        <activity android:name=".Activities.CircularActivity" />
+
+        <receiver
+            android:name=".Receivers.NetworkStateReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
     </application>
 
 </manifest>
