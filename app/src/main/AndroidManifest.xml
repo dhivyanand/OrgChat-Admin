@@ -38,7 +38,12 @@
         <receiver
             android:name=".Receivers.NetworkStateReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
+
+        <service
+            android:name=".Services.ApplicationBackgroundService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

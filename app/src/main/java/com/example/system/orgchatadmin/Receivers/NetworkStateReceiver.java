@@ -12,4 +12,5 @@ public class NetworkStateReceiver extends BroadcastReceiver {
         // an Intent broadcast.
         throw new UnsupportedOperationException("Not yet implemented");
     }
+
 }
