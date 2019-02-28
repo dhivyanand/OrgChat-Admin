@@ -1,6 +1,7 @@
 package com.example.system.orgchatadmin.Activities;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +21,8 @@ import com.example.system.orgchatadmin.Fragments.DepartmentFragment;
 import com.example.system.orgchatadmin.R;
 import com.example.system.orgchatadmin.Fragments.SuggestionFragment;
 import com.example.system.orgchatadmin.Fragments.UserFragment;
+import com.example.system.orgchatadmin.Receivers.NetworkStateReceiver;
+import com.example.system.orgchatadmin.Services.ApplicationBackgroundService;
 
 public class HomeNav extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -47,6 +50,14 @@ public class HomeNav extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(0);
+
+        if(NetworkStateReceiver.isOnline(getApplicationContext()) && !NetworkStateReceiver.isMyServiceRunning(ApplicationBackgroundService.class, getApplicationContext())){
+
+            Intent appBgSer = new Intent(HomeNav.this,ApplicationBackgroundService.class);
+            startService(appBgSer);
+
+        }
+
 
     }
 
