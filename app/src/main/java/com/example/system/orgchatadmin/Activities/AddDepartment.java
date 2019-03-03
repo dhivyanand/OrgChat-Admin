@@ -1,5 +1,7 @@
 package com.example.system.orgchatadmin.Activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,12 +16,22 @@ import android.widget.Toast;
 
 import com.example.system.orgchatadmin.Adapters.DepartmentListAdapter;
 import com.example.system.orgchatadmin.Database.CreateDatabaseUsingHelper;
+import com.example.system.orgchatadmin.LocalConfig;
+import com.example.system.orgchatadmin.Network.APIRequest;
 import com.example.system.orgchatadmin.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class AddDepartment extends AppCompatActivity {
 
+    APIRequest request;
     Button cancel , done;
     EditText dept , sub_dept;
     ImageButton verify , add;
@@ -38,13 +50,6 @@ public class AddDepartment extends AppCompatActivity {
 
     boolean verify_department(String department){
 
-        try {
-
-
-
-        }catch(SQLException e){
-            return false;
-        }
 
         return true;
     }
@@ -53,13 +58,33 @@ public class AddDepartment extends AppCompatActivity {
 
         String department = dept.getText().toString();
 
-        try{
+        final Map<String,String> map = new HashMap<>();
+        request = new APIRequest();
 
+        SharedPreferences sharedpreferences = getSharedPreferences("AppSession", Context.MODE_PRIVATE);
 
+        String user = sharedpreferences.getString("user","nil");
+        String password = sharedpreferences.getString("password","nil");
 
-        } catch (Exception e){
-            return 'I';
+        map.put("id",user);
+        map.put("password",password);
+        map.put("new_dept",department);
+
+        Toast.makeText(this, user+ " "+password, Toast.LENGTH_SHORT).show();
+
+        try {
+            String response = APIRequest.processRequest(map,LocalConfig.rootURL+"addDepartment.php",getApplicationContext());
+
+            JSONObject obj = new JSONObject(response);
+
+            String dept_id = (String)obj.get("id");
+
+            Toast.makeText(this, response, Toast.LENGTH_SHORT).show();
+
+        } catch (Exception e) {
+            return 'F';
         }
+
         // 'S' success
         // 'F' Failed
         // 'I' No internet

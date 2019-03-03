@@ -1,24 +1,16 @@
 package com.example.system.orgchatadmin.Network;
 
 import android.content.Context;
-import android.text.TextUtils;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import javax.net.ssl.HttpsURLConnection;
+import java.net.URL;
 
 /**
  * Created by System on 28/2/19.
@@ -26,23 +18,82 @@ import okhttp3.Response;
 
 public class APIRequest {
 
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    public static String mapToString(Map<String, String> map) {
+        StringBuilder stringBuilder = new StringBuilder();
 
-    public String processRequest(final Map<String,String> arg, final String URL) {
-
-        OkHttpClient client = new OkHttpClient();
-
-        RequestBody body = RequestBody.create(JSON, String.valueOf((JSONObject) arg));
-        Request request = new Request.Builder()
-                .url(URL)
-                .post(body)
-                .build();
-        try {
-            Response response = client.newCall(request).execute();
-            return response.body().toString();
-        } catch (Exception e) {
-            return null;
+        for (String key : map.keySet()) {
+            if (stringBuilder.length() > 0) {
+                stringBuilder.append("&");
+            }
+            String value = map.get(key);
+            try {
+                stringBuilder.append((key != null ? URLEncoder.encode(key, "UTF-8") : ""));
+                stringBuilder.append("=");
+                stringBuilder.append(value != null ? URLEncoder.encode(value, "UTF-8") : "");
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException("This method requires UTF-8 encoding support", e);
+            }
         }
+
+        return stringBuilder.toString();
+    }
+
+    public static String processRequest(final Map<String, String> arg, final String URL, final Context context) {
+
+        final ArrayList<String> res = new ArrayList<String>();
+
+        Thread t = new Thread(){
+
+            @Override
+            public void run(){
+
+                try{
+
+                    URL obj = new URL(URL);
+                    HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+
+                    //add reuqest header
+                    con.setRequestMethod("POST");
+                    con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+
+                    String urlParameters = mapToString(arg);
+
+                    // Send post request
+                    con.setDoOutput(true);
+
+                    DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+                    wr.writeBytes(urlParameters);
+                    wr.flush();
+                    wr.close();
+
+                    DataInputStream read = new DataInputStream(con.getInputStream());
+
+                    String line;
+                    StringBuffer stringBuffer = new StringBuffer();
+
+                    while( (line = read.readLine()) != null ){
+                        stringBuffer.append(line);
+                    }
+
+                    res.add(stringBuffer.toString());
+
+                }catch(Exception e){
+
+                }
+
+            }
+
+        };
+
+        try {
+            t.start();
+            t.join();
+        }catch (Exception e){
+
+        }
+
+        return res.get(0);
+
     }
 
 }

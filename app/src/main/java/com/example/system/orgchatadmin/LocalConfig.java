@@ -6,6 +6,6 @@ package com.example.system.orgchatadmin;
 
 public class LocalConfig {
 
-    public static String rootURL = "http://ide50-dhivianand998.legacy.cs50.io:8080/Org_chat_Server/scripts/";
+    public static String rootURL = "https://ide50-dhivianand998.legacy.cs50.io:8080/Org_chat_Server/scripts/";
 
 }
