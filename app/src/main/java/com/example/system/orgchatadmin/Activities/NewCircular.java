@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.system.orgchatadmin.Adapters.AttachmentAdapter;
 import com.example.system.orgchatadmin.R;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class NewCircular extends AppCompatActivity {
@@ -31,6 +32,7 @@ public class NewCircular extends AppCompatActivity {
     ArrayList<Bitmap> thumbnail;
     ArrayList<Boolean> is_video;
     ArrayList<String> path;
+    ArrayList<File> file;
 
     int READ_REQUEST_CODE = 42;
 
@@ -92,6 +94,11 @@ public class NewCircular extends AppCompatActivity {
 
     }
 
+    private boolean sendToServer(){
+
+        return false;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +114,7 @@ public class NewCircular extends AppCompatActivity {
         thumbnail = new ArrayList<Bitmap>();
         is_video = new ArrayList<Boolean>();
         path = new ArrayList<String>();
+        file = new ArrayList<File>();
 
         adapter = new AttachmentAdapter(NewCircular.this,thumbnail,is_video,path);
 
@@ -126,6 +134,8 @@ public class NewCircular extends AppCompatActivity {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
 
             }
         });
