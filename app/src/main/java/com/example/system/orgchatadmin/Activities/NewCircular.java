@@ -94,7 +94,7 @@ public class NewCircular extends AppCompatActivity {
 
     }
 
-    private boolean sendToServer(){
+    private boolean sendToServer(String title, String description, ArrayList<Uri> uri){
 
         return false;
     }
