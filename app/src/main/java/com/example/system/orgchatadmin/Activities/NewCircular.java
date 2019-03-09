@@ -1,11 +1,15 @@
 package com.example.system.orgchatadmin.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.provider.OpenableColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,12 +18,19 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.system.orgchatadmin.Adapters.AttachmentAdapter;
+import com.example.system.orgchatadmin.LocalConfig;
+import com.example.system.orgchatadmin.Network.APIRequest;
 import com.example.system.orgchatadmin.R;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NewCircular extends AppCompatActivity {
 
@@ -94,7 +105,52 @@ public class NewCircular extends AppCompatActivity {
 
     }
 
-    private boolean sendToServer(String title, String description, ArrayList<Uri> uri){
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
+    }
+
+    private boolean sendToServer(String title, String description, ArrayList<String> uri){
+
+        SharedPreferences sharedpreferences = getSharedPreferences("AppSession", Context.MODE_PRIVATE);
+
+        String user = sharedpreferences.getString("user","nil");
+        String password = sharedpreferences.getString("password","nil");
+
+        Map<String,String> arg = new HashMap<String,String>();
+
+        String id = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
+
+        arg.put("id",user);
+        arg.put("password",password);
+        arg.put("title",title);
+        arg.put("data",description);
+        arg.put("circular_id",id);
+
+        for(int i=0;i<uri.size();i++){
+
+
+
+        }
+
+        APIRequest.processRequest(arg, LocalConfig.rootURL+"newCircular.php",getApplicationContext());
 
         return false;
     }
@@ -135,7 +191,16 @@ public class NewCircular extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                String t = title.getText().toString();
+                String desc = description.getText().toString();
 
+                if(!t.equals("")) {
+
+                    sendToServer(t,desc,path);
+
+                }else{
+                    Toast.makeText(NewCircular.this, "Please fill the Title", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
