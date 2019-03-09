@@ -57,13 +57,13 @@ public class SubDepartmentFragment extends Fragment {
 
             SQLiteDatabase mydatabase = getContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
 
-            Cursor resultSet = mydatabase.rawQuery("Select * from SUBDEPARTMENT where DEPARTMENT = department",null);
+            Cursor resultSet = mydatabase.rawQuery("Select * from SUBDEPARTMENT where DEPARTMENT = '"+department+"'",null);
 
             if(resultSet.moveToFirst()) {
 
                 do {
 
-                    String dept = resultSet.getString(0);
+                    String dept = resultSet.getString(1);
                     list.add(dept);
 
                 } while (resultSet.moveToNext());

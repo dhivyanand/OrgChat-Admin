@@ -3,6 +3,7 @@ package com.example.system.orgchatadmin.Activities;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -78,8 +79,60 @@ public class AddDepartment extends AppCompatActivity {
             JSONObject obj = new JSONObject(response);
 
             String dept_id = (String)obj.get("id");
+            String time = (String)obj.get("time");
+            String result = (String)obj.get("result");
 
-            Toast.makeText(this, response, Toast.LENGTH_SHORT).show();
+            if(result.equals("TRUE")) {
+
+                SQLiteDatabase mydatabase = openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
+
+                mydatabase.execSQL("insert into DEPARTMENT values('" + dept_id + "','" + department + "')");
+
+                int numRows = (int) DatabaseUtils.queryNumEntries(mydatabase, "DEPARTMENT");
+
+                mydatabase.execSQL("delete from DATE where TYPE = 'DEPARTMENT'");
+                mydatabase.execSQL("insert into DATE values('DEPARTMENT','" + time + "','" + numRows + "')");
+
+
+                for( int i=0 ; i < sub_dept_list.size() ; i++) {
+
+                    Map map1 = new HashMap<String, String>();
+                    map1.put("dept",department);
+                    map1.put("sub_dept",sub_dept_list.get(i));
+                    map1.put("id",user);
+                    map1.put("password",password);
+
+                    Toast.makeText(this, sub_dept_list.get(i) , Toast.LENGTH_SHORT).show();
+
+                    response = APIRequest.processRequest(map1, LocalConfig.rootURL + "addSubDepartment.php", getApplicationContext());
+
+                    obj = new JSONObject(response);
+
+                    result = (String)obj.get("result");
+
+                    if(result.equals("TRUE")) {
+
+                        String sub_dept_id = (String)obj.get("id");
+                        String sub_dept_time = (String)obj.get("time");
+
+                        mydatabase.execSQL("insert into SUBDEPARTMENT values('" + sub_dept_id + "','" + sub_dept_list.get(i) + "','" + department + "')");
+
+                        numRows = (int) DatabaseUtils.queryNumEntries(mydatabase, "SUBDEPARTMENT");
+
+                        mydatabase.execSQL("delete from DATE where TYPE = 'SUBDEPARTMENT'");
+                        mydatabase.execSQL("insert into DATE values('SUBDEPARTMENT','" + sub_dept_time + "','" + numRows + "')");
+
+                    }
+
+                }
+
+                Toast.makeText(this, response, Toast.LENGTH_SHORT).show();
+
+            } else {
+
+                return 'F';
+
+            }
 
         } catch (Exception e) {
             return 'F';
@@ -125,13 +178,14 @@ public class AddDepartment extends AppCompatActivity {
 
                 char result = add_to_server();
 
-                if(result == 'S')
+                if(result == 'S') {
                     Toast.makeText(AddDepartment.this, "Department created successfully.", Toast.LENGTH_SHORT).show();
-                else if (result == 'F')
+                    finish();
+                }else if (result == 'F') {
                     Toast.makeText(AddDepartment.this, "Failed to create Department", Toast.LENGTH_SHORT).show();
-                else if (result == 'I')
+                }else if (result == 'I') {
                     Toast.makeText(AddDepartment.this, "Unable to reach.", Toast.LENGTH_SHORT).show();
-
+                }
 
             }
         });

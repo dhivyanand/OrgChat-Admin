@@ -53,15 +53,12 @@ public class DepartmentFragment extends Fragment {
 
                 do {
 
-                    String dept = resultSet.getString(0);
+                    String dept = resultSet.getString(1);
                     list.add(dept);
 
                 } while (resultSet.moveToNext());
 
             }
-
-            //test
-            list.add("hi");
 
             resultSet.close();
             mydatabase.close();
