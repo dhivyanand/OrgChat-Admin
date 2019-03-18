@@ -1,14 +1,20 @@
 package com.example.system.orgchatadmin.Activities;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,11 +32,21 @@ import com.example.system.orgchatadmin.Network.APIRequest;
 import com.example.system.orgchatadmin.R;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import android.util.Base64;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import static java.util.Base64.*;
 
 public class NewCircular extends AppCompatActivity {
 
@@ -44,6 +60,7 @@ public class NewCircular extends AppCompatActivity {
     ArrayList<Boolean> is_video;
     ArrayList<String> path;
     ArrayList<File> file;
+    ArrayList<Uri> file_uri;
 
     int READ_REQUEST_CODE = 42;
 
@@ -79,19 +96,20 @@ public class NewCircular extends AppCompatActivity {
 
     }
 
+    private String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA, MediaStore.Video.Media.DATA, MediaStore.Files.FileColumns.DATA};
+        CursorLoader loader = new CursorLoader(getApplicationContext(), contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
+    }
+
     private boolean notEmpty(ArrayList<Bitmap> thumbnail, ArrayList<Boolean> is_video, ArrayList<String> path){
 
         return thumbnail != null && is_video != null && path != null;
-    }
-
-    private Bitmap thumbnailFromPath(Uri uri){
-
-        Bitmap thumbImage = ThumbnailUtils.extractThumbnail(
-                BitmapFactory.decodeFile(uri.getPath()),
-                128,
-                128);
-
-        return thumbImage;
     }
 
     private boolean isVideo(Uri uri){
@@ -105,54 +123,76 @@ public class NewCircular extends AppCompatActivity {
 
     }
 
-    public String getFileName(Uri uri) {
-        String result = null;
-        if (uri.getScheme().equals("content")) {
-            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-            try {
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            } finally {
-                cursor.close();
-            }
-        }
-        if (result == null) {
-            result = uri.getPath();
-            int cut = result.lastIndexOf('/');
-            if (cut != -1) {
-                result = result.substring(cut + 1);
-            }
-        }
-        return result;
-    }
-
     private boolean sendToServer(String title, String description, ArrayList<String> uri){
 
-        SharedPreferences sharedpreferences = getSharedPreferences("AppSession", Context.MODE_PRIVATE);
+        try {
 
-        String user = sharedpreferences.getString("user","nil");
-        String password = sharedpreferences.getString("password","nil");
+            SharedPreferences sharedpreferences = getSharedPreferences("AppSession", Context.MODE_PRIVATE);
 
-        Map<String,String> arg = new HashMap<String,String>();
+            String user = sharedpreferences.getString("user", "nil");
+            String password = sharedpreferences.getString("password", "nil");
 
-        String id = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
+            Map<String, String> arg = new HashMap<String, String>();
 
-        arg.put("id",user);
-        arg.put("password",password);
-        arg.put("title",title);
-        arg.put("data",description);
-        arg.put("circular_id",id);
+            String id = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
-        for(int i=0;i<uri.size();i++){
+            arg.put("id", user);
+            arg.put("password", password);
+            arg.put("title", title);
+            arg.put("data", description);
+            arg.put("circular_id", id);
+
+            Map<String,File> attachment = new HashMap<String,File>();
+
+            for (int i = 0; i < file_uri.size(); i++) {
 
 
+                Toast.makeText(this, file_uri.get(i).toString() , Toast.LENGTH_SHORT).show();
 
+                String[] filePathColumn = { MediaStore.Images.Media.DATA, MediaStore.Video.Media.DATA, MediaStore.Files.FileColumns.DATA };
+                Cursor cursor = getApplication().getContentResolver().query(file_uri.get(i), filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String filePath = cursor.getString(columnIndex);
+                cursor.close();
+
+                File file = new File(filePath);
+
+                Toast.makeText(this, file.getName(), Toast.LENGTH_SHORT).show();
+
+                String name = user+id+i+file.getName();
+
+                attachment.put(file.getName(),file);
+
+            }
+
+            String res = APIRequest.processRequest(arg, attachment, LocalConfig.rootURL + "newCircular.php", getApplicationContext());
+
+            JSONObject obj = new JSONObject(res);
+
+            String result = (String)obj.get("result");
+
+            Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+
+            if(result.equals("TRUE")) {
+
+                SQLiteDatabase mydatabase = openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
+                mydatabase.execSQL("insert into CIRCULAR values('"+id+"','"+title+"','"+description+"','"+ new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime())+"','"+  new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()) +"') ");
+                mydatabase.close();
+
+                Toast.makeText(this, "new circ", Toast.LENGTH_SHORT).show();
+
+                return true;
+            }else {
+                return false;
+            }
+
+        }catch(Exception e){
+            System.out.println(e.toString());
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+            return false;
         }
 
-        APIRequest.processRequest(arg, LocalConfig.rootURL+"newCircular.php",getApplicationContext());
-
-        return false;
     }
 
     @Override
@@ -171,6 +211,7 @@ public class NewCircular extends AppCompatActivity {
         is_video = new ArrayList<Boolean>();
         path = new ArrayList<String>();
         file = new ArrayList<File>();
+        file_uri = new ArrayList<Uri>();
 
         adapter = new AttachmentAdapter(NewCircular.this,thumbnail,is_video,path);
 
@@ -196,7 +237,10 @@ public class NewCircular extends AppCompatActivity {
 
                 if(!t.equals("")) {
 
-                    sendToServer(t,desc,path);
+                    if(sendToServer(t,desc,path)){
+                        Toast.makeText(NewCircular.this, "Circular sent successfully.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
 
                 }else{
                     Toast.makeText(NewCircular.this, "Please fill the Title", Toast.LENGTH_SHORT).show();
@@ -217,8 +261,10 @@ public class NewCircular extends AppCompatActivity {
             if (resultData != null) {
                 uri = resultData.getData();
 
-                Bitmap b = thumbnailFromPath(uri);
-                String path = uri.toString();
+                Bitmap b = null;//thumbnailFromPath(uri);
+                String path;
+                path = uri.getPath();
+                file_uri.add(uri);
                 Boolean isVideo = isVideo(uri);
 
                 populate_adapter(b,path,isVideo);
@@ -226,6 +272,4 @@ public class NewCircular extends AppCompatActivity {
             }
         }
     }
-
-
 }

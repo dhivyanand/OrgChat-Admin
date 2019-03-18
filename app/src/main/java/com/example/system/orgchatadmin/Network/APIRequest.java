@@ -1,9 +1,23 @@
 package com.example.system.orgchatadmin.Network;
 
 import android.content.Context;
+import android.widget.Toast;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -41,6 +55,8 @@ public class APIRequest {
     public static String processRequest(final Map<String, String> arg, final String URL, final Context context) {
 
         final ArrayList<String> res = new ArrayList<String>();
+
+        String response="null";
 
         Thread t = new Thread(){
 
@@ -90,6 +106,62 @@ public class APIRequest {
             t.join();
         }catch (Exception e){
 
+        }
+
+        if(res.size() > 0)
+            return res.get(0);
+        else
+            return "null";
+        
+
+    }
+
+    public static String processRequest(final Map<String,String> arg, final Map<String,File> attachment, final String url, final Context context) {
+
+
+        final ArrayList<String> res = new ArrayList<String>();
+
+        Thread t = new Thread() {
+
+            @Override
+            public void run() {
+
+                try {
+
+
+                    HttpClient client = new DefaultHttpClient();
+                    HttpPost post = new HttpPost(url);
+
+                    MultipartEntity reqEntity = new MultipartEntity();
+
+                    for (Map.Entry entry : arg.entrySet())
+                        reqEntity.addPart(entry.getKey().toString(), new StringBody(entry.getValue().toString()));
+
+                    for (Map.Entry entry : attachment.entrySet()) {
+                        reqEntity.addPart(entry.getKey().toString(), new FileBody(attachment.get(entry.getKey())));
+                        //Toast.makeText(context, entry.getKey().toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    post.setEntity(reqEntity);
+
+                    HttpResponse response = client.execute(post);
+                    HttpEntity resEntity = response.getEntity();
+                    final String response_str = EntityUtils.toString(resEntity);
+
+                    res.add(response_str);
+
+                } catch (final IOException e) {
+                    System.out.println(e.toString());
+                }
+
+            }
+
+        };
+        try {
+            t.start();
+            t.join();
+        } catch (Exception e) {
+            System.out.println(e.toString());
         }
 
         return res.get(0);

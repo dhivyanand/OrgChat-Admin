@@ -16,10 +16,10 @@
         android:layout_height="10dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/imageView3" />
+        android:layout_below="@+id/dp" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/dp"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_below="@+id/space6"
@@ -27,7 +27,7 @@
         app:srcCompat="@drawable/ic_profile" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/name"
         android:background="@drawable/description_bg"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
@@ -48,12 +48,12 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/name"
         android:layout_centerHorizontal="true"
         android:id="@+id/space7" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/reg"
         android:background="@drawable/description_bg"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
@@ -68,12 +68,12 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/reg"
         android:layout_centerHorizontal="true"
         android:id="@+id/space8" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/dept"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -84,12 +84,12 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:layout_below="@+id/spinner"
+        android:layout_below="@+id/dept"
         android:layout_centerHorizontal="true"
         android:id="@+id/space9" />
 
     <Spinner
-        android:id="@+id/spinner2"
+        android:id="@+id/subdept"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -103,13 +103,13 @@
         android:layout_height="10dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/spinner2" />
+        android:layout_below="@+id/subdept" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button2"
+        android:layout_above="@+id/done"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/space15"
@@ -120,7 +120,7 @@
         android:textAlignment="center" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -149,7 +149,7 @@
         android:id="@+id/space13" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/phone"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:background="@drawable/description_bg"
@@ -164,7 +164,7 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:layout_below="@+id/editText5"
+        android:layout_below="@+id/phone"
         android:layout_centerHorizontal="true"
         android:id="@+id/space15" />
 

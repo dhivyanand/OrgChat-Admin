@@ -19,9 +19,9 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/imageButton"
-        android:layout_toLeftOf="@+id/textView3"
+        android:layout_toLeftOf="@+id/attr"
         android:layout_toRightOf="@+id/imageButton"
-        android:layout_toStartOf="@+id/textView3"
+        android:layout_toStartOf="@+id/attr"
         android:gravity="center"
         android:text="TextView" />
 

@@ -3,6 +3,8 @@ package com.example.system.orgchatadmin.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,10 +15,17 @@ import android.widget.Toast;
 import com.example.system.orgchatadmin.Database.CreateDatabaseUsingHelper;
 import com.example.system.orgchatadmin.Functions.HttpRequestFunction;
 import com.example.system.orgchatadmin.LocalConfig;
+import com.example.system.orgchatadmin.Network.APIRequest;
 import com.example.system.orgchatadmin.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
@@ -26,7 +35,28 @@ public class Login extends AppCompatActivity {
 
     boolean verify_admin(String uname , String pass) {
 
-        return true;
+        Map<String,String> req = new HashMap<String,String>();
+        req.put("id",uname);
+        req.put("password",pass);
+
+        String res = APIRequest.processRequest(req,LocalConfig.rootURL+"adminLogin.php",getApplicationContext());
+
+        JSONObject obj = null;
+
+        try {
+
+            obj = new JSONObject(res);
+
+            String result = (String)obj.get("result");
+
+            if(result.equals("TRUE"))
+                return true;
+            else
+                return false;
+
+        } catch (Exception e) {
+            return false;
+        }
 
     }
 

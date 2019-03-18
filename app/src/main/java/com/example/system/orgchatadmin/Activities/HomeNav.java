@@ -1,7 +1,11 @@
 package com.example.system.orgchatadmin.Activities;
 
+import android.app.ActivityManager;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -33,6 +37,39 @@ public class HomeNav extends AppCompatActivity
 
     }
 
+    public static boolean isMyServiceRunning(Class<?> serviceClass,Context c) {
+        ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isOnline(Context context) {
+        try {
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = cm.getActiveNetworkInfo();
+            //should check null because in airplane mode it will be null
+            return (netInfo != null && netInfo.isConnected());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void start_bg_service(){
+
+        if (isOnline(getApplicationContext()) && !isMyServiceRunning(ApplicationBackgroundService.class, getApplicationContext())) {
+
+            Intent appBgSer = new Intent(getApplicationContext(),ApplicationBackgroundService.class);
+            startService(appBgSer);
+
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +95,7 @@ public class HomeNav extends AppCompatActivity
 
         }
 
+        start_bg_service();
 
     }
 

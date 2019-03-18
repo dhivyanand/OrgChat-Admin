@@ -14,7 +14,7 @@ public class DatabaseFunctions {
 
     public static String createUserTable(){
 
-        return "CREATE TABLE USER (USER_ID VARCHAR , SUBDEPARTMENT_ID , NAME VARCHAR , IMAGE VARCHAR , ADDRESS VARCHAR)";
+        return "CREATE TABLE USER (USER_ID VARCHAR , SUBDEPARTMENT_ID , NAME VARCHAR , IMAGE VARCHAR , ADDRESS VARCHAR , PASSWORD VARCHAR , PHONE VARCHAR )";
     }
 
     public static String createMessageTable(){

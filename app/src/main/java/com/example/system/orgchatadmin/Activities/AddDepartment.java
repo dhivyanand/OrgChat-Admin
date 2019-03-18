@@ -115,6 +115,8 @@ public class AddDepartment extends AppCompatActivity {
                         String sub_dept_id = (String)obj.get("id");
                         String sub_dept_time = (String)obj.get("time");
 
+                        Toast.makeText(this, sub_dept_id, Toast.LENGTH_SHORT).show();
+
                         mydatabase.execSQL("insert into SUBDEPARTMENT values('" + sub_dept_id + "','" + sub_dept_list.get(i) + "','" + department + "')");
 
                         numRows = (int) DatabaseUtils.queryNumEntries(mydatabase, "SUBDEPARTMENT");
