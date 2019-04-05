@@ -1,6 +1,5 @@
 package com.example.system.orgchatadmin.Activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,8 +8,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -31,16 +28,15 @@ import com.example.system.orgchatadmin.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddUser extends AppCompatActivity {
+public class EditUser extends AppCompatActivity {
 
-    String first_dept;
+    String first_dept, profile;
     Spinner dept, subdept;
 
     Bitmap dpImg;
@@ -171,13 +167,14 @@ public class AddUser extends AppCompatActivity {
             arg.put("address", address);
             arg.put("DOB", "");
 
-            String res = APIRequest.processRequest(arg, LocalConfig.rootURL + "createUser.php", getApplicationContext());
+            String res = APIRequest.processRequest(arg, LocalConfig.rootURL + "editUser.php", getApplicationContext());
 
             Toast.makeText(this, res, Toast.LENGTH_SHORT).show();
 
             if (res.equals("TRUE")) {
 
                 SQLiteDatabase mydatabase = openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
+                mydatabase.execSQL("delete from USER where USER_ID = '"+user_id+"' ");
                 mydatabase.execSQL("insert into USER values('" + user_id + "','" + getSubDeptID(subdept) + "','" + name + "','" + dp + "','" + address + "','"+ password +"','"+ phone +"') ");
                 mydatabase.close();
 
@@ -194,33 +191,73 @@ public class AddUser extends AppCompatActivity {
 
     }
 
+    public String getSubdeptIdfromUserId(String userID){
+
+        String subdeptid="";
+
+        try{
+
+            SQLiteDatabase mydatabase = getApplicationContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
+
+            Cursor resultSet = mydatabase.rawQuery("Select SUBDEPARTMENT_ID from USER where USER_ID = '"+userID+"' ",null);
+
+            if(resultSet.moveToFirst())
+                subdeptid = resultSet.getString(0);
+
+            resultSet.close();
+
+        }catch (Exception e){
+
+        }
+
+        return subdeptid;
+
+    }
+
     public void pickImage() {
-        Intent intent = new Intent();
-// Show only images, no videos or anything else
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-// Always show the chooser (if there are multiple options available)
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+        intent.putExtra("crop", "true");
+        intent.putExtra("scale", true);
+        intent.putExtra("outputX", 256);
+        intent.putExtra("outputY", 256);
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, 1);
     }
 
     public String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos = new  ByteArrayOutputStream();
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
         byte [] b=baos.toByteArray();
         String temp= Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
     }
 
+    public Bitmap StringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }catch(Exception e){
+            e.getMessage();
+            return null;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_user);
+        setContentView(R.layout.activity_edit_user);
+
 
         Button done;
         final EditText name, reg, password, phone, address;
+        String spinner_Dept, spinner_subDept;
 
         first_dept = null;
-        dpImg = null;
 
         done = (Button)findViewById(R.id.save);
 
@@ -234,11 +271,51 @@ public class AddUser extends AppCompatActivity {
         dept = (Spinner)findViewById(R.id.message);
         subdept = (Spinner)findViewById(R.id.subdept);
 
+        String userID = getIntent().getStringExtra("userID");
+
         ArrayAdapter<String> dept_adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, fetch_local_department());
 
         ArrayAdapter<String> sub_dept_adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, fetch_local_subdepartment(first_dept));
+
+        reg.setText(userID);
+
+        try{
+
+            SQLiteDatabase mydatabase = getApplicationContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
+
+            Cursor resultSet = mydatabase.rawQuery("Select * from USER where USER_ID = '"+userID+"' ",null);
+
+            if(resultSet.moveToFirst()) {
+
+                name.setText(resultSet.getString(2));
+
+                profile = resultSet.getString(3);
+
+                if(profile != null)
+                    dp.setImageBitmap(StringToBitMap(profile));
+
+                phone.setText(resultSet.getString(6));
+                address.setText(resultSet.getString(4));
+                password.setText(resultSet.getString(5));
+
+            }
+
+            resultSet = mydatabase.rawQuery("select DEPARTMENT, SUBDEPARTMENT from SUBDEPARTMENT where SUBDEPARTMENT_ID = '"+getSubdeptIdfromUserId(userID)+"' ",null);
+
+            if(resultSet.moveToFirst()){
+                Toast.makeText(this, resultSet.getString(1), Toast.LENGTH_SHORT).show();
+                dept.setSelection(dept_adapter.getPosition(resultSet.getString(0)),true);
+                subdept.setSelection(sub_dept_adapter.getPosition(resultSet.getString(1)),true);
+
+            }
+
+            resultSet.close();
+
+        }catch (Exception e){
+
+        }
 
         dept.setAdapter(dept_adapter);
         subdept.setAdapter(sub_dept_adapter);
@@ -275,25 +352,24 @@ public class AddUser extends AppCompatActivity {
 
                 if(uname != null && u_reg != null && u_password != null && u_phone != null && u_address != null){
 
-                    String image = "";
+                    String image = profile;
 
                     if(dpImg != null)
                         image = BitMapToString(dpImg);
-
-                    //Toast.makeText(AddUser.this, image, Toast.LENGTH_SHORT).show();
+                    //else
+                    //    image = BitMapToString(BitmapFactory.decodeResource(getResources(),R.drawable.ic_profile));
 
                     if(addUserToServer(uname,u_reg,u_password,subdept.getSelectedItem().toString(),u_phone,u_address,image)){
 
-                        Toast.makeText(AddUser.this, "User created successfully.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditUser.this, "User created successfully.", Toast.LENGTH_SHORT).show();
 
                     }else{
 
-                        Toast.makeText(AddUser.this, "User not created.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditUser.this, "User not created.", Toast.LENGTH_SHORT).show();
 
                     }
 
                 }
-
 
             }
         });
@@ -317,5 +393,4 @@ public class AddUser extends AppCompatActivity {
             }
         }
     }
-
 }

@@ -178,6 +178,22 @@ public class NewCircular extends AppCompatActivity {
 
                 SQLiteDatabase mydatabase = openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
                 mydatabase.execSQL("insert into CIRCULAR values('"+id+"','"+title+"','"+description+"','"+ new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime())+"','"+  new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()) +"') ");
+
+                for (int i = 0; i < file_uri.size(); i++) {
+
+                    String[] filePathColumn = { MediaStore.Images.Media.DATA, MediaStore.Video.Media.DATA, MediaStore.Files.FileColumns.DATA };
+                    Cursor cursor = getApplication().getContentResolver().query(file_uri.get(i), filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String filePath = cursor.getString(columnIndex);
+                    cursor.close();
+
+                    File file = new File(filePath);
+
+                    mydatabase.execSQL("insert into FILE values('"+id+"','"+file.getName()+"','"+file.getPath()+"')");
+
+                }
+
                 mydatabase.close();
 
                 Toast.makeText(this, "new circ", Toast.LENGTH_SHORT).show();

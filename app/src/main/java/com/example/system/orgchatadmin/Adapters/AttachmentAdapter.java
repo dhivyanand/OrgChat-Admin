@@ -68,16 +68,8 @@ public class AttachmentAdapter extends BaseAdapter {
         thumb = (ImageView)root.findViewById(R.id.thumb);
         video = (ImageView)root.findViewById(R.id.video);
 
-        if(thumbnail.get(i) != null)
-            thumb.setImageBitmap(thumbnail.get(i));
-
         if(path.get(i) != null)
             name.setText(path.get(i));
-
-        if(is_video.get(i) != true)
-            video.setVisibility(View.INVISIBLE);
-        else
-            video.setVisibility(View.VISIBLE);
 
         return root;
     }

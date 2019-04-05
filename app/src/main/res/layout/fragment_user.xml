@@ -14,10 +14,11 @@
         android:text="Add User" />
 
     <ListView
-        android:id="@+id/list_user"
+        android:id="@+id/list_questions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/add_user"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:focusableInTouchMode="false" />
 </RelativeLayout>

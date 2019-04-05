@@ -9,10 +9,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.system.orgchatadmin.Activities.CircularActivity;
 import com.example.system.orgchatadmin.Activities.NewCircular;
 import com.example.system.orgchatadmin.Adapters.CircularListAdapter;
 import com.example.system.orgchatadmin.R;
@@ -45,6 +47,7 @@ public class CircularFragment extends Fragment {
 
         ArrayList<String> list = new ArrayList<String>();
         ArrayList<String> date = new ArrayList<String>();
+        final ArrayList<String> circularID = new ArrayList<String>();
 
         CircularListAdapter adap = new CircularListAdapter(getContext(),list,date);
 
@@ -54,7 +57,7 @@ public class CircularFragment extends Fragment {
 
             SQLiteDatabase mydatabase = getContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
 
-            Cursor resultSet = mydatabase.rawQuery("Select TITLE, DATE from CIRCULAR",null);
+            Cursor resultSet = mydatabase.rawQuery("Select TITLE, DATE, CIRCULAR_ID from CIRCULAR",null);
 
             if(resultSet.moveToFirst()) {
 
@@ -62,6 +65,7 @@ public class CircularFragment extends Fragment {
 
                     list.add(resultSet.getString(0));
                     date.add(resultSet.getString(1));
+                    circularID.add(resultSet.getString(2));
 
                     adap.notifyDataSetChanged();
 
@@ -76,7 +80,14 @@ public class CircularFragment extends Fragment {
             System.out.println(e.toString());
         }
 
+        circular_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                startActivity(new Intent(getContext(), CircularActivity.class).putExtra("circular_id",circularID.get(i)));
+
+            }
+        });
 
         new_circular.setOnClickListener(new View.OnClickListener() {
             @Override

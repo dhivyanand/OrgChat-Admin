@@ -2,9 +2,7 @@ package com.example.system.orgchatadmin.Activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.database.DatabaseUtils;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,18 +14,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.system.orgchatadmin.Adapters.DepartmentListAdapter;
-import com.example.system.orgchatadmin.Database.CreateDatabaseUsingHelper;
 import com.example.system.orgchatadmin.LocalConfig;
 import com.example.system.orgchatadmin.Network.APIRequest;
 import com.example.system.orgchatadmin.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class AddDepartment extends AppCompatActivity {
@@ -153,12 +147,12 @@ public class AddDepartment extends AppCompatActivity {
         setContentView(R.layout.activity_add_department);
 
         cancel = (Button)findViewById(R.id.cancel);
-        done = (Button)findViewById(R.id.done);
-        dept = (EditText)findViewById(R.id.dept);
+        done = (Button)findViewById(R.id.save);
+        dept = (EditText)findViewById(R.id.message);
         sub_dept = (EditText)findViewById(R.id.sub_dept);
         verify = (ImageButton)findViewById(R.id.verify);
         add = (ImageButton)findViewById(R.id.add_sub_dept);
-        list = (ListView)findViewById(R.id.list_user);
+        list = (ListView)findViewById(R.id.list_questions);
 
         sub_dept_list = new ArrayList<String>();
         adapter = new DepartmentListAdapter(AddDepartment.this, sub_dept_list);

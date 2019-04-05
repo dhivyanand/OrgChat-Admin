@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.system.orgchatadmin.Activities.NewFeedback">
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/done"
+        android:layout_toStartOf="@+id/done"
+        android:text="Cancel" />
+
+    <Button
+        android:id="@+id/done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="Done" />
+
+    <ListView
+        android:id="@+id/list_questions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_above="@+id/done"
+        android:layout_alignEnd="@+id/verify"
+        android:layout_alignRight="@+id/verify"
+        android:layout_below="@+id/verify"
+        android:divider="@null"
+        android:dividerHeight="1dp">
+
+    </ListView>
+
+    <ImageButton
+        android:id="@+id/verify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/title"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="?android:attr/colorBackground"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:srcCompat="@drawable/ic_tick" />
+
+    <EditText
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/verify"
+        android:layout_toStartOf="@+id/verify"
+        android:ems="10"
+        android:hint="Title"
+        android:inputType="textPersonName"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp" />
+
+    <Button
+        android:id="@+id/new_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/list_questions"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/list_questions"
+        android:text="New Question" />
+</RelativeLayout>

@@ -7,7 +7,7 @@
     tools:context="com.example.system.orgchatadmin.Activities.AddDepartment">
 
     <EditText
-        android:id="@+id/dept"
+        android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:layout_alignParentTop="true"
@@ -23,7 +23,7 @@
         android:id="@+id/verify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/dept"
+        android:layout_alignBottom="@+id/message"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
@@ -35,7 +35,7 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:layout_below="@+id/dept"
+        android:layout_below="@+id/message"
         android:layout_centerHorizontal="true"
         android:id="@+id/space3" />
 
@@ -72,21 +72,21 @@
         android:id="@+id/space4" />
 
     <ListView
-        android:id="@+id/list_user"
+        android:id="@+id/list_questions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:layout_above="@+id/done"
+        android:layout_above="@+id/save"
         android:layout_below="@+id/space4"
         android:divider="@null"
         android:dividerHeight="1dp"
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:id="@+id/done"
+        android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -98,9 +98,9 @@
         android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/list_user"
-        android:layout_toLeftOf="@+id/done"
-        android:layout_toStartOf="@+id/done"
+        android:layout_below="@+id/list_questions"
+        android:layout_toLeftOf="@+id/save"
+        android:layout_toStartOf="@+id/save"
         android:text="Cancel" />
 
 </RelativeLayout>

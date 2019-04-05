@@ -21,6 +21,7 @@ public class CreateDatabaseUsingHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(DatabaseFunctions.createMessageTable());
         sqLiteDatabase.execSQL(DatabaseFunctions.createCircularTable());
         sqLiteDatabase.execSQL(DatabaseFunctions.createAttachmentTable());
+        sqLiteDatabase.execSQL(DatabaseFunctions.createFileTable());
         sqLiteDatabase.execSQL(DatabaseFunctions.createDateTable());
 
     }
@@ -34,6 +35,7 @@ public class CreateDatabaseUsingHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE MESSAGE");
         sqLiteDatabase.execSQL("DROP TABLE CIRCULAR");
         sqLiteDatabase.execSQL("DROP TABLE ATTACHMENT");
+        sqLiteDatabase.execSQL("DROP TABLE FILE");
         sqLiteDatabase.execSQL("DROP TABLE DATE");
 
         onCreate(sqLiteDatabase);

@@ -19,6 +19,7 @@
         android:layout_toRightOf="@+id/thumb"
         android:gravity="center"
         android:text="TextView"
+        android:textColor="#000"
         android:textSize="24sp" />
 
     <ImageView

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -22,6 +23,8 @@ import android.widget.Toast;
 import com.example.system.orgchatadmin.Fragments.CircularFragment;
 import com.example.system.orgchatadmin.Fragments.CompliantFragment;
 import com.example.system.orgchatadmin.Fragments.DepartmentFragment;
+import com.example.system.orgchatadmin.Fragments.DocFragment;
+import com.example.system.orgchatadmin.Fragments.FeedbackFragment;
 import com.example.system.orgchatadmin.R;
 import com.example.system.orgchatadmin.Fragments.SuggestionFragment;
 import com.example.system.orgchatadmin.Fragments.UserFragment;
@@ -159,10 +162,18 @@ public class HomeNav extends AppCompatActivity
 
             fragment = new CircularFragment();
 
-        } else if (id == R.id.nav_account_settings) {
+        } else if (id == R.id.nav_feedback) {
 
+            fragment = new FeedbackFragment();
 
-        } else if (id == R.id.nav_server_settings) {
+        } else if (id == R.id.nav_epf) {
+
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://unifiedportal-mem.epfindia.gov.in/"));
+            startActivity(browserIntent);
+
+        } else if (id == R.id.nav_esi) {
+
+            fragment = new DocFragment();
 
         }
 

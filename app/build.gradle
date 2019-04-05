@@ -17,14 +17,14 @@ android {
         }
     }
     packagingOptions {
-            exclude 'META-INF/DEPENDENCIES'
-            exclude 'META-INF/LICENSE'
-            exclude 'META-INF/LICENSE.txt'
-            exclude 'META-INF/license.txt'
-            exclude 'META-INF/NOTICE'
-            exclude 'META-INF/NOTICE.txt'
-            exclude 'META-INF/notice.txt'
-            exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
     }
 }
 
@@ -38,7 +38,7 @@ dependencies {
     implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.squareup.okhttp3:okhttp:3.0.1'
     implementation 'org.apache.httpcomponents:httpclient:4.5.7'
-    implementation ('com.googlecode.json-simple:json-simple:1.1.1'){
+    implementation('com.googlecode.json-simple:json-simple:1.1.1') {
         exclude group: 'org.hamcrest', module: 'hamcrest-core'
     }
     implementation 'org.apache.httpcomponents:httpmime:4.2.3'

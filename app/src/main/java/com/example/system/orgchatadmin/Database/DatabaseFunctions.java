@@ -19,7 +19,7 @@ public class DatabaseFunctions {
 
     public static String createMessageTable(){
 
-        return "CREATE TABLE MESSAGE (MESSAGE_ID VARCHAR , SENDER_ID VARCHAR , TITLE VARCHAR , MESSAGE VARCHAR , MESSAGE_TYPE VARCHAR , DATE VARCHAR , TIME VARCHAR) ";
+        return "CREATE TABLE MESSAGE (MESSAGE_ID VARCHAR , SENDER_ID VARCHAR , TITLE VARCHAR , MESSAGE VARCHAR , MESSAGE_TYPE VARCHAR , TIME VARCHAR , SUBDEPARTMENT_ID VARCHAR) ";
     }
 
     public static String createAttachmentTable(){
@@ -30,6 +30,11 @@ public class DatabaseFunctions {
     public static String createCircularTable(){
 
         return "CREATE TABLE CIRCULAR (CIRCULAR_ID VARCHAR , TITLE VARCHAR , MESSAGE VARCHAR , DATE VARCHAR , TIME VARCHAR)";
+    }
+
+    public static String createFileTable(){
+
+        return "CREATE TABLE FILE (MESSAGE_ID VARCHAR , NAME VARCHAR , LOCATION VARCHAR)";
     }
 
     public static String createDateTable(){

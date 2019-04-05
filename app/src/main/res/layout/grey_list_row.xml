@@ -6,29 +6,30 @@
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginTop="10dp"
-    android:elevation="0dp"
+    android:elevation="5dp"
     android:background="@drawable/grey_list_row_bg">
 
     <TextView
-        android:id="@+id/dept"
+        android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:layout_alignParentTop="true"
+        android:layout_marginBottom="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_toLeftOf="@+id/attr"
-        android:layout_toStartOf="@+id/attr"
+        android:layout_toLeftOf="@+id/time"
+        android:layout_toStartOf="@+id/time"
         android:gravity="center"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/attr"
+        android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/dept"
-        android:layout_alignBottom="@+id/dept"
+        android:layout_alignBaseline="@+id/message"
+        android:layout_alignBottom="@+id/message"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="10dp"

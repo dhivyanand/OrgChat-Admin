@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.widget.Toast;
 
 import com.example.system.orgchatadmin.Services.ApplicationBackgroundService;
 
@@ -31,11 +32,11 @@ public class NetworkStateReceiver extends BroadcastReceiver {
 
             if (isOnline(context) && !isMyServiceRunning(ApplicationBackgroundService.class, context)) {
 
-               context.startService(appBgSer);
+                context.startService(appBgSer);
 
             } else {
 
-                context.stopService(appBgSer);
+               context.stopService(appBgSer);
 
             }
         } catch (NullPointerException e) {

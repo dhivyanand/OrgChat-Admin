@@ -10,6 +10,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.system.orgchatadmin.LocalConfig;
@@ -63,6 +65,7 @@ public class ApplicationBackgroundService extends Service {
                 String last_update="0";
 
                 mydatabase.execSQL("delete from DEPARTMENT");
+                mydatabase.execSQL("delete from SUBDEPARTMENT");
 
                 while (iterator.hasNext()) {
                     //iterator.next().toJSONString();
@@ -109,7 +112,7 @@ public class ApplicationBackgroundService extends Service {
 
                 mydatabase.execSQL("insert into DATE values('Department','"+last_update+"','"+String.valueOf(i)+"')");
 
-                Toast.makeText(this, last_update+" "+i, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, last_update+" "+i, Toast.LENGTH_SHORT).show();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -119,6 +122,98 @@ public class ApplicationBackgroundService extends Service {
 
         }catch(SQLException e){
 
+        }
+
+    }
+
+    public void sync_messages(String uname, String pass){
+
+        try {
+
+            SQLiteDatabase mydatabase = getApplicationContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
+
+            Cursor resultSet = mydatabase.rawQuery("Select LAST_UPDATE, COUNT from DATE where TYPE='Message'",null);
+
+            String res = null;
+
+            if(resultSet.moveToFirst()) {
+
+                String lastupdate = resultSet.getString(0);
+                String count = resultSet.getString(1);
+
+                Map<String,String> req = new HashMap<String,String>();
+                req.put("id",uname);
+                req.put("password",pass);
+                req.put("time_stamp",lastupdate);
+
+                res = APIRequest.processRequest(req, LocalConfig.rootURL+"syncMessages.php",getApplicationContext());
+
+            }else{
+
+                Map<String,String> req = new HashMap<String,String>();
+                req.put("id",uname);
+                req.put("password",pass);
+                req.put("time_stamp","all");
+
+                res = APIRequest.processRequest(req, LocalConfig.rootURL+"syncMessages.php",getApplicationContext());
+
+            }
+
+
+            JSONArray obj = null;
+
+            obj = (JSONArray) new JSONParser().parse(res);
+
+            Iterator<JSONObject> iterator = obj.iterator();
+            JSONObject key = null;
+            int i=0;
+
+            mydatabase.execSQL("delete from MESSAGE");
+
+            String id, title, data, sender_id, time=null, attachment_list, type, subdept_id;
+
+            while (iterator.hasNext()) {
+                //iterator.next().toJSONString();
+                JSONObject dept = iterator.next();
+
+                id = (String)dept.get("id");
+
+                title = (String)dept.get("title");
+
+                sender_id = (String)dept.get("sender_id");
+
+                data = (String)dept.get("data");
+
+                time = (String)dept.get("time");
+
+                attachment_list = (String)dept.get("file");
+
+                type = (String)dept.get("type");
+
+                subdept_id = (String)dept.get("subdept_id");
+
+                String attachments[] = attachment_list.split("&");
+
+                //timebeing
+                mydatabase.execSQL("delete from FILE where MESSAGE_ID = '"+id+"'");
+
+                for(int c=0 ; c < attachments.length ; c++) {
+                    mydatabase.execSQL("insert into FILE values('" + id + "','" + attachments[c] + "','not_available')");
+                }
+                mydatabase.execSQL("insert into MESSAGE values('"+id+"','"+sender_id+"','"+title+"','"+data+"','"+type+"','"+time+"','"+subdept_id+"')");
+
+                i++;
+
+            }
+
+            mydatabase.execSQL("delete from DATE where TYPE = 'message'");
+            mydatabase.execSQL("insert into DATE values('message','"+time+"','"+String.valueOf(i)+"')");
+
+            resultSet.close();
+            mydatabase.close();
+
+        }catch(Exception e){
+            //Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -158,7 +253,7 @@ public class ApplicationBackgroundService extends Service {
                 Map<String,String> req = new HashMap<String,String>();
                 req.put("id",uname);
                 req.put("password",pass);
-                req.put("user_agent","user");
+                req.put("user_agent","admin");
                 req.put("last_update","0");
                 req.put("count","0");
 
@@ -184,6 +279,117 @@ public class ApplicationBackgroundService extends Service {
         return true;
     }
 
+    public boolean check_user(String uname, String pass){
+
+        try{
+
+            SQLiteDatabase mydatabase = getApplicationContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
+
+            Cursor resultSet = mydatabase.rawQuery("Select LAST_UPDATE, COUNT from DATE where TYPE='User'",null);
+
+            if(resultSet.moveToFirst()) {
+
+                String lastupdate = resultSet.getString(0);
+                String count = resultSet.getString(1);
+
+                Map<String,String> req = new HashMap<String,String>();
+                req.put("id",uname);
+                req.put("password",pass);
+                req.put("last_update",lastupdate);
+                req.put("count",count);
+
+                String res = APIRequest.processRequest(req, LocalConfig.rootURL+"checkUserUpdates.php",getApplicationContext());
+                org.json.JSONObject obj = new org.json.JSONObject(res);
+
+                String result = (String)obj.get("result");
+
+                if(result.equals("TRUE"))
+                    return false;
+                else
+                    return true;
+
+            }else{
+
+                return true;
+
+            }
+
+        }catch(Exception e){
+
+        }
+
+        return true;
+    }
+
+    public void sync_user(String uname, String pass){
+
+        try {
+
+            Toast.makeText(this, "Downloading User.", Toast.LENGTH_SHORT).show();
+            Log.i("Downloading","User");
+
+            SQLiteDatabase mydatabase = getApplicationContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
+
+            String res = null;
+
+            Map<String,String> req = new HashMap<String,String>();
+            req.put("admin_id",uname);
+            req.put("admin_password",pass);
+
+            res = APIRequest.processRequest(req, LocalConfig.rootURL+"listUser.php",getApplicationContext());
+
+            JSONArray obj = null;
+
+            obj = (JSONArray) new JSONParser().parse(res);
+
+            Iterator<JSONObject> iterator = obj.iterator();
+            JSONObject key = null;
+            int i=0;
+
+            String id, subdept_id, name, dob, address, time=null, password, phone, profile;
+
+            mydatabase.execSQL("DELETE FROM USER");
+
+            while (iterator.hasNext()) {
+                //iterator.next().toJSONString();
+                JSONObject dept = iterator.next();
+
+                id = (String)dept.get("id");
+
+                subdept_id = (String)dept.get("subdept_id");
+
+                name = (String)dept.get("name");
+
+                dob = (String)dept.get("dob");
+
+                time = (String)dept.get("last_update");
+
+                address = (String)dept.get("address");
+
+                password = (String)dept.get("password");
+
+                phone = (String)dept.get("phone");
+
+                profile = (String)dept.get("profile");
+
+                mydatabase.execSQL("insert into USER values('"+id+"','"+subdept_id+"','"+name+"','"+profile+"','"+address+"','"+password+"','"+phone+"')");
+
+                i++;
+
+            }
+
+            mydatabase.execSQL("delete from DATE where TYPE = 'User'");
+            mydatabase.execSQL("insert into DATE values('User','"+time+"','"+String.valueOf(i)+"')");
+
+            mydatabase.close();
+
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+
+    }
+
+
     @Override
     public void onCreate(){
 
@@ -202,6 +408,14 @@ public class ApplicationBackgroundService extends Service {
                 sync_department(uname, pass);
 
             }
+
+            if(check_user(uname, pass)){
+
+                sync_user(uname,pass);
+
+            }
+
+            sync_messages(uname,pass);
 
         }
 

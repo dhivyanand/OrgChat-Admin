@@ -24,18 +24,23 @@
             android:id="@+id/nav_circular"
             android:icon="@drawable/ic_volume"
             android:title="Circular" />
+        <item
+            android:id="@+id/nav_feedback"
+            android:icon="@drawable/ic_select"
+            android:title="Feedback" />
+
     </group>
 
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_account_settings"
-                android:icon="@drawable/ic_account_settings"
-                android:title="Account Settings" />
+                android:id="@+id/nav_epf"
+                android:icon="@drawable/ic_menu_share"
+                android:title="EPF India" />
             <item
-                android:id="@+id/nav_server_settings"
-                android:icon="@drawable/ic_server_settings"
-                android:title="Server Settings" />
+                android:id="@+id/nav_esi"
+                android:icon="@drawable/ic_first_aid_kit"
+                android:title="ESI Hospitals" />
         </menu>
     </item>
 

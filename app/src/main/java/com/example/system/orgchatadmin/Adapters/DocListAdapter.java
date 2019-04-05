@@ -5,28 +5,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.example.system.orgchatadmin.R;
 
 import java.util.ArrayList;
 
-public class CircularListAdapter extends BaseAdapter {
+/**
+ * Created by System on 1/4/19.
+ */
+
+public class DocListAdapter extends BaseAdapter {
 
     Context c;
-    ArrayList<String> title,date;
+    ArrayList<Integer> images;
 
-    public CircularListAdapter(Context c, ArrayList<String> title, ArrayList<String> date){
+    public DocListAdapter(Context c, ArrayList<Integer> images){
 
         this.c = c;
-        this.title = title;
-        this.date = date;
+        this.images = images;
 
     }
 
     @Override
     public int getCount() {
-        return title.size();
+        return images.size();
     }
 
     @Override
@@ -44,15 +47,12 @@ public class CircularListAdapter extends BaseAdapter {
 
         LayoutInflater layoutInflater = (LayoutInflater) c
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View root = layoutInflater.inflate(R.layout.grey_list_row, viewGroup, false);
+        View root = layoutInflater.inflate(R.layout.doc_list_row, viewGroup, false);
 
-        TextView content = root.findViewById(R.id.message);
-        TextView d = root.findViewById(R.id.time);
+        ImageView imageView = (ImageView)root.findViewById(R.id.doc);
 
-        content.setText(title.get(i));
-        d.setText(date.get(i));
+        imageView.setImageResource(images.get(i));
 
         return root;
-
     }
 }
