@@ -112,7 +112,7 @@ public class SubDepartmentFragment extends Fragment {
 
             }
         });
-        ((HomeNav)getActivity()).setActionBarTitle(department);
+        //((HomeNav)getActivity()).setActionBarTitle(department);
 
         subdepartment_list();
 

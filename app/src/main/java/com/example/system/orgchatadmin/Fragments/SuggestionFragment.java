@@ -114,7 +114,7 @@ public class SuggestionFragment extends Fragment {
         sender_id = new ArrayList<String>();
         subdept_id = new ArrayList<String>();
 
-        MessageAdapter adapter = new MessageAdapter(getContext(), compliant, date, subdept_id);
+        MessageAdapter adapter = new MessageAdapter(getContext(), compliant, date, subdept_id,null);
 
         list.setAdapter(adapter);
 

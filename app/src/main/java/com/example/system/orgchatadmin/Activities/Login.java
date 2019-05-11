@@ -114,7 +114,8 @@ public class Login extends AppCompatActivity {
                     if(verify_admin(uname,pass)){
 
                         if(create_local_pref(uname,pass) && create_local_database()){
-                            startActivity(new Intent(Login.this,HomeNav.class));
+                            startActivity(new Intent(Login.this,home.class));
+                            Toast.makeText(Login.this, "Login Successful.", Toast.LENGTH_SHORT).show();
                             finish();
                         }
 

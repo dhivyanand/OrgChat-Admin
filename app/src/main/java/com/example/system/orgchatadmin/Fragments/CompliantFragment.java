@@ -114,7 +114,7 @@ public class CompliantFragment extends Fragment {
         message_id = new ArrayList<String>();
         sender_id = new ArrayList<String>();
 
-        MessageAdapter adapter = new MessageAdapter(getContext(), compliant, date, subdept_id);
+        MessageAdapter adapter = new MessageAdapter(getContext(), compliant, date, subdept_id,null);
 
         list.setAdapter(adapter);
 
@@ -158,7 +158,7 @@ public class CompliantFragment extends Fragment {
             resultSet.close();
 
         }catch (Exception e){
-            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+
         }
 
         return root;

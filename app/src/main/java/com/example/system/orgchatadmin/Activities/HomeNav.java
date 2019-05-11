@@ -31,54 +31,15 @@ import com.example.system.orgchatadmin.Fragments.UserFragment;
 import com.example.system.orgchatadmin.Receivers.NetworkStateReceiver;
 import com.example.system.orgchatadmin.Services.ApplicationBackgroundService;
 
-public class HomeNav extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeNav extends AppCompatActivity {
 
-    public void setActionBarTitle(String title){
-
-        getSupportActionBar().setTitle(title);
-
-    }
-
-    public static boolean isMyServiceRunning(Class<?> serviceClass,Context c) {
-        ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isOnline(Context context) {
-        try {
-            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo netInfo = cm.getActiveNetworkInfo();
-            //should check null because in airplane mode it will be null
-            return (netInfo != null && netInfo.isConnected());
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public void start_bg_service(){
-
-        if (isOnline(getApplicationContext()) && !isMyServiceRunning(ApplicationBackgroundService.class, getApplicationContext())) {
-
-            Intent appBgSer = new Intent(getApplicationContext(),ApplicationBackgroundService.class);
-            startService(appBgSer);
-
-        }
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_nav);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -98,94 +59,9 @@ public class HomeNav extends AppCompatActivity
 
         }
 
-        start_bg_service();
+        start_bg_service(); */
 
     }
 
-    @Override
-    public void onBackPressed() {
 
-        FragmentManager fm = getFragmentManager();
-        fm.popBackStackImmediate();
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home_nav, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        Fragment fragment = null;
-
-        if (id == R.id.nav_department) {
-
-            fragment = new DepartmentFragment();
-
-        } else if (id == R.id.nav_user) {
-
-            fragment = new UserFragment();
-
-        } else if (id == R.id.nav_suggestion) {
-
-            fragment = new SuggestionFragment();
-
-        } else if (id == R.id.nav_compliant) {
-
-            fragment = new CompliantFragment();
-
-        } else if (id == R.id.nav_circular) {
-
-            fragment = new CircularFragment();
-
-        } else if (id == R.id.nav_feedback) {
-
-            fragment = new FeedbackFragment();
-
-        } else if (id == R.id.nav_epf) {
-
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://unifiedportal-mem.epfindia.gov.in/"));
-            startActivity(browserIntent);
-
-        } else if (id == R.id.nav_esi) {
-
-            fragment = new DocFragment();
-
-        }
-
-        if (fragment != null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.home_frame, fragment);
-            transaction.commit();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-
-    }
 }

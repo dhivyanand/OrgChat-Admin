@@ -1,5 +1,6 @@
 package com.example.system.orgchatadmin.Services;
 
+import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,11 +10,13 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.system.orgchatadmin.Constants;
 import com.example.system.orgchatadmin.LocalConfig;
 import com.example.system.orgchatadmin.Network.APIRequest;
 
@@ -49,8 +52,6 @@ public class ApplicationBackgroundService extends Service {
             req.put("user_agent","admin");
 
             String res = APIRequest.processRequest(req, LocalConfig.rootURL+"fetchAllDept.php",getApplicationContext());
-
-            Toast.makeText(this, res, Toast.LENGTH_SHORT).show();
 
             mydatabase.execSQL("delete from DEPARTMENT");
 
@@ -130,7 +131,7 @@ public class ApplicationBackgroundService extends Service {
 
         try {
 
-            SQLiteDatabase mydatabase = getApplicationContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
+            SQLiteDatabase mydatabase = context.openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
 
             Cursor resultSet = mydatabase.rawQuery("Select LAST_UPDATE, COUNT from DATE where TYPE='Message'",null);
 
@@ -157,6 +158,8 @@ public class ApplicationBackgroundService extends Service {
 
                 res = APIRequest.processRequest(req, LocalConfig.rootURL+"syncMessages.php",getApplicationContext());
 
+                mydatabase.execSQL("delete from MESSAGE");
+
             }
 
 
@@ -168,7 +171,6 @@ public class ApplicationBackgroundService extends Service {
             JSONObject key = null;
             int i=0;
 
-            mydatabase.execSQL("delete from MESSAGE");
 
             String id, title, data, sender_id, time=null, attachment_list, type, subdept_id;
 
@@ -200,7 +202,7 @@ public class ApplicationBackgroundService extends Service {
                 for(int c=0 ; c < attachments.length ; c++) {
                     mydatabase.execSQL("insert into FILE values('" + id + "','" + attachments[c] + "','not_available')");
                 }
-                mydatabase.execSQL("insert into MESSAGE values('"+id+"','"+sender_id+"','"+title+"','"+data+"','"+type+"','"+time+"','"+subdept_id+"')");
+                mydatabase.execSQL("insert into MESSAGE values('"+id+"','"+sender_id+"','"+title+"','"+data+"','"+type+"','"+time+"','"+subdept_id+"','NR')");
 
                 i++;
 
@@ -283,7 +285,7 @@ public class ApplicationBackgroundService extends Service {
 
         try{
 
-            SQLiteDatabase mydatabase = getApplicationContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
+            SQLiteDatabase mydatabase = context.openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
 
             Cursor resultSet = mydatabase.rawQuery("Select LAST_UPDATE, COUNT from DATE where TYPE='User'",null);
 
@@ -315,7 +317,8 @@ public class ApplicationBackgroundService extends Service {
             }
 
         }catch(Exception e){
-
+            System.out.println(e.toString());
+            e.printStackTrace();
         }
 
         return true;
@@ -325,10 +328,12 @@ public class ApplicationBackgroundService extends Service {
 
         try {
 
-            Toast.makeText(this, "Downloading User.", Toast.LENGTH_SHORT).show();
-            Log.i("Downloading","User");
+            Constants.is_user_syncing = true;
 
-            SQLiteDatabase mydatabase = getApplicationContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
+            //Toast.makeText(this, "Downloading User.", Toast.LENGTH_SHORT).show();
+            //Log.i("Downloading","User");
+
+            SQLiteDatabase mydatabase = context.openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
 
             String res = null;
 
@@ -384,41 +389,71 @@ public class ApplicationBackgroundService extends Service {
             mydatabase.close();
 
         }catch(Exception e){
-            System.out.println(e.toString());
+            System.out.println("aksbfkasdkf"+e.toString());
+            e.printStackTrace();
         }
+
+        Constants.is_user_syncing = false;
 
     }
 
+    String uname,pass;
+    Context context;
 
     @Override
     public void onCreate(){
 
-        Toast.makeText(this, "Service Started", Toast.LENGTH_SHORT).show();
+        context = getApplicationContext();
 
-        SharedPreferences sharedpreferences = getSharedPreferences("AppSession", Context.MODE_PRIVATE);
+        AsyncTaskRunner runner = new AsyncTaskRunner();
+        runner.execute("A");
 
-        String status = sharedpreferences.getString("status","nil");
-        String uname = sharedpreferences.getString("user","nil");
-        String pass = sharedpreferences.getString("password","nil");
+    }
 
-        if(status.equals("verified")){
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
-            if(check_dept(uname, pass)){
+        private String resp;
+        ProgressDialog progressDialog;
 
-                sync_department(uname, pass);
+        @Override
+        protected String doInBackground(String... s) {
+            SharedPreferences sharedpreferences = getSharedPreferences("AppSession", Context.MODE_PRIVATE);
+
+            String status = sharedpreferences.getString("status","nil");
+            uname = sharedpreferences.getString("user","nil");
+            pass = sharedpreferences.getString("password","nil");
+
+            if(status.equals("verified")){
+
+                if(check_user(uname, pass)){
+
+                    sync_user(uname,pass);
+                    //sync_messages(uname,pass);
+
+                }
 
             }
+            return null;
+        }
 
-            if(check_user(uname, pass)){
 
-                sync_user(uname,pass);
+        @Override
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+            //progressDialog.dismiss();
+        }
 
-            }
 
-            sync_messages(uname,pass);
+        @Override
+        protected void onPreExecute() {
 
         }
 
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+
+        }
     }
 
 }

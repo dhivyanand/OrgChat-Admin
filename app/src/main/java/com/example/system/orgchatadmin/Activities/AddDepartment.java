@@ -65,8 +65,6 @@ public class AddDepartment extends AppCompatActivity {
         map.put("password",password);
         map.put("new_dept",department);
 
-        Toast.makeText(this, user+ " "+password, Toast.LENGTH_SHORT).show();
-
         try {
             String response = APIRequest.processRequest(map,LocalConfig.rootURL+"addDepartment.php",getApplicationContext());
 
@@ -96,8 +94,6 @@ public class AddDepartment extends AppCompatActivity {
                     map1.put("id",user);
                     map1.put("password",password);
 
-                    Toast.makeText(this, sub_dept_list.get(i) , Toast.LENGTH_SHORT).show();
-
                     response = APIRequest.processRequest(map1, LocalConfig.rootURL + "addSubDepartment.php", getApplicationContext());
 
                     obj = new JSONObject(response);
@@ -108,8 +104,6 @@ public class AddDepartment extends AppCompatActivity {
 
                         String sub_dept_id = (String)obj.get("id");
                         String sub_dept_time = (String)obj.get("time");
-
-                        Toast.makeText(this, sub_dept_id, Toast.LENGTH_SHORT).show();
 
                         mydatabase.execSQL("insert into SUBDEPARTMENT values('" + sub_dept_id + "','" + sub_dept_list.get(i) + "','" + department + "')");
 

@@ -8,11 +8,13 @@
 
 
     <Space
+        android:id="@+id/space11"
         android:layout_width="match_parent"
         android:layout_height="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/space11" />
+        android:layout_marginTop="10dp" />
 
     <EditText
         android:id="@+id/circular_title"
@@ -37,8 +39,8 @@
     <EditText
         android:id="@+id/circular_description"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/post"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/floatingActionButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/space14"
@@ -76,26 +78,18 @@
         android:elevation="10dp"
         android:background="@drawable/attachment_bg" />
 
-    <Button
-        android:id="@+id/post"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="6dp"
-        android:elevation="10dp"
-        android:text="Post" />
-
     <ImageButton
         android:id="@+id/add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignBottom="@+id/attachment_list"
         android:layout_alignEnd="@+id/attachment_list"
         android:layout_alignRight="@+id/attachment_list"
         android:background="@android:color/transparent"
-        android:elevation="10dp"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:elevation="15dp"
+        app:srcCompat="@drawable/ic_attachment" />
 
     <TextView
         android:id="@+id/empty"
@@ -105,5 +99,29 @@
         android:layout_centerHorizontal="true"
         android:elevation="10dp"
         android:text="Attachments" />
+
+    <RelativeLayout
+        android:id="@+id/popup_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/space12"
+        android:elevation="12dp">
+
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/add"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/add"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:clickable="true"
+        android:tint="#FFF"
+        app:srcCompat="@drawable/ic_menu_send" />
 
 </RelativeLayout>

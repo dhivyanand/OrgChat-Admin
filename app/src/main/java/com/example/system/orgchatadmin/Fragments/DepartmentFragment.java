@@ -118,7 +118,7 @@ public class DepartmentFragment extends Fragment {
             }
         });
 
-        ((HomeNav)getActivity()).setActionBarTitle("Department");
+        //((HomeNav)getActivity()).setActionBarTitle("Department");
 
         departmentList(dept);
 

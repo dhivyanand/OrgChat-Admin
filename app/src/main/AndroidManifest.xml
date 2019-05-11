@@ -54,7 +54,11 @@
 
         <activity android:name=".Activities.EditUser" />
         <activity android:name=".Activities.NewFeedback" />
-        <activity android:name=".Activities.NewQuestion"></activity>
+        <activity android:name=".Activities.NewQuestion" />
+        <activity android:name=".Activities.HomeCircular" />
+        <activity android:name=".Activities.HomeCompliant" />
+        <activity android:name=".Activities.HomeSuggestion" />
+        <activity android:name=".Activities.HomeUsers"></activity>
     </application>
 
 </manifest>

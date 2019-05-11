@@ -19,6 +19,7 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Map;
@@ -66,7 +67,7 @@ public class APIRequest {
                 try{
 
                     URL obj = new URL(URL);
-                    HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+                    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
                     //add reuqest header
                     con.setRequestMethod("POST");

@@ -1,5 +1,6 @@
 package com.example.system.orgchatadmin.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,14 +17,15 @@ import java.util.ArrayList;
 public class MessageAdapter extends BaseAdapter {
 
     Context c;
-    ArrayList<String> title,date,department;
+    ArrayList<String> title,date,department,status;
 
-    public MessageAdapter(Context c, ArrayList<String> title, ArrayList<String> date, ArrayList<String> department){
+    public MessageAdapter(Context c, ArrayList<String> title, ArrayList<String> date, ArrayList<String> department, ArrayList<String> status){
 
         this.c = c;
         this.title = title;
         this.date = date;
         this.department = department;
+        this.status = status;
 
     }
 
@@ -39,9 +41,10 @@ public class MessageAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return title.size();
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
@@ -56,6 +59,9 @@ public class MessageAdapter extends BaseAdapter {
         content.setText(title.get(i));
         d.setText(date.get(i));
         dept.setText(department.get(i));
+
+        if(status.get(i).equals("unread"))
+            d.setTextColor(c.getResources().getColor(android.R.color.holo_green_dark));
 
         return root;
     }

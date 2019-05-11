@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -43,80 +44,6 @@ public class EditUser extends AppCompatActivity {
 
     ImageView dp;
 
-    ArrayList<String> fetch_local_department(){
-
-        ArrayList<String> list = new ArrayList<String>();
-
-        try {
-
-            SQLiteDatabase mydatabase = getApplicationContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
-
-            Cursor resultSet = mydatabase.rawQuery("Select * from DEPARTMENT",null);
-
-            if(resultSet.moveToFirst()) {
-
-                do {
-
-                    String dept = resultSet.getString(1);
-                    list.add(dept);
-
-                } while (resultSet.moveToNext());
-
-                first_dept = list.get(0);
-
-            }
-
-
-            resultSet.close();
-            mydatabase.close();
-
-        }catch(SQLException e){
-
-        }
-
-        return list;
-
-    }
-
-    ArrayList<String> fetch_local_subdepartment(String department){
-
-        ArrayList<String> list = new ArrayList<String>();
-
-        try{
-
-            SQLiteDatabase mydatabase = getApplicationContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
-
-            Cursor resultSet = mydatabase.rawQuery("Select * from SUBDEPARTMENT where DEPARTMENT = '"+department+"'",null);
-
-            if(resultSet.moveToFirst()) {
-
-                do {
-
-                    String dept = resultSet.getString(1);
-                    list.add(dept);
-
-                } while (resultSet.moveToNext());
-
-            }
-
-            resultSet.close();
-            mydatabase.close();
-
-        }catch(Exception e){
-
-        }
-
-        return list;
-    }
-
-    ArrayAdapter<String> getAdap(String dept){
-
-        ArrayAdapter<String> sub_dept_adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, fetch_local_subdepartment(dept));
-        return sub_dept_adapter;
-
-    }
-
     public String getSubDeptID(String subdept){
 
         try{
@@ -124,8 +51,6 @@ public class EditUser extends AppCompatActivity {
             SQLiteDatabase mydatabase = getApplicationContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
 
             Cursor resultSet = mydatabase.rawQuery("Select SUBDEPARTMENT_ID from SUBDEPARTMENT where SUBDEPARTMENT = '"+subdept+"'",null);
-
-            Toast.makeText(this, subdept, Toast.LENGTH_SHORT).show();
 
             String subdept_id = "";
             if(resultSet.moveToFirst())
@@ -169,8 +94,6 @@ public class EditUser extends AppCompatActivity {
 
             String res = APIRequest.processRequest(arg, LocalConfig.rootURL + "editUser.php", getApplicationContext());
 
-            Toast.makeText(this, res, Toast.LENGTH_SHORT).show();
-
             if (res.equals("TRUE")) {
 
                 SQLiteDatabase mydatabase = openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
@@ -188,29 +111,6 @@ public class EditUser extends AppCompatActivity {
         }
 
         return false;
-
-    }
-
-    public String getSubdeptIdfromUserId(String userID){
-
-        String subdeptid="";
-
-        try{
-
-            SQLiteDatabase mydatabase = getApplicationContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
-
-            Cursor resultSet = mydatabase.rawQuery("Select SUBDEPARTMENT_ID from USER where USER_ID = '"+userID+"' ",null);
-
-            if(resultSet.moveToFirst())
-                subdeptid = resultSet.getString(0);
-
-            resultSet.close();
-
-        }catch (Exception e){
-
-        }
-
-        return subdeptid;
 
     }
 
@@ -253,31 +153,24 @@ public class EditUser extends AppCompatActivity {
         setContentView(R.layout.activity_edit_user);
 
 
-        Button done;
-        final EditText name, reg, password, phone, address;
+        FloatingActionButton done;
+        final EditText name, reg, password, phone, address, department;
         String spinner_Dept, spinner_subDept;
 
         first_dept = null;
 
-        done = (Button)findViewById(R.id.save);
+        done = (FloatingActionButton) findViewById(R.id.save);
 
         name = (EditText)findViewById(R.id.name);
         reg = (EditText)findViewById(R.id.reg);
         password = (EditText)findViewById(R.id.password);
         phone = (EditText)findViewById(R.id.phone);
         address = (EditText)findViewById(R.id.address);
+        department = (EditText)findViewById(R.id.department);
+
         dp = (ImageView)findViewById(R.id.dp);
 
-        dept = (Spinner)findViewById(R.id.message);
-        subdept = (Spinner)findViewById(R.id.subdept);
-
         String userID = getIntent().getStringExtra("userID");
-
-        ArrayAdapter<String> dept_adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, fetch_local_department());
-
-        ArrayAdapter<String> sub_dept_adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, fetch_local_subdepartment(first_dept));
 
         reg.setText(userID);
 
@@ -288,6 +181,8 @@ public class EditUser extends AppCompatActivity {
             Cursor resultSet = mydatabase.rawQuery("Select * from USER where USER_ID = '"+userID+"' ",null);
 
             if(resultSet.moveToFirst()) {
+
+                department.setText(resultSet.getString(1));
 
                 name.setText(resultSet.getString(2));
 
@@ -302,36 +197,11 @@ public class EditUser extends AppCompatActivity {
 
             }
 
-            resultSet = mydatabase.rawQuery("select DEPARTMENT, SUBDEPARTMENT from SUBDEPARTMENT where SUBDEPARTMENT_ID = '"+getSubdeptIdfromUserId(userID)+"' ",null);
-
-            if(resultSet.moveToFirst()){
-                Toast.makeText(this, resultSet.getString(1), Toast.LENGTH_SHORT).show();
-                dept.setSelection(dept_adapter.getPosition(resultSet.getString(0)),true);
-                subdept.setSelection(sub_dept_adapter.getPosition(resultSet.getString(1)),true);
-
-            }
-
             resultSet.close();
 
         }catch (Exception e){
 
         }
-
-        dept.setAdapter(dept_adapter);
-        subdept.setAdapter(sub_dept_adapter);
-
-        dept.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                String selectedItem = parent.getItemAtPosition(position).toString();
-                subdept.setAdapter(getAdap(selectedItem));
-            } // to close the onItemSelected
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-
-            }
-        });
 
         dp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -359,9 +229,10 @@ public class EditUser extends AppCompatActivity {
                     //else
                     //    image = BitMapToString(BitmapFactory.decodeResource(getResources(),R.drawable.ic_profile));
 
-                    if(addUserToServer(uname,u_reg,u_password,subdept.getSelectedItem().toString(),u_phone,u_address,image)){
+                    if(addUserToServer(uname,u_reg,u_password,department.getText().toString(),u_phone,u_address,image)){
 
                         Toast.makeText(EditUser.this, "User created successfully.", Toast.LENGTH_SHORT).show();
+                        finish();
 
                     }else{
 

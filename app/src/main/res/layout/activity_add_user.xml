@@ -10,6 +10,16 @@
     android:layout_marginTop="10dp"
     tools:context="com.example.system.orgchatadmin.Activities.AddUser">
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_tick" />
+
     <Space
         android:id="@+id/space5"
         android:layout_width="match_parent"
@@ -26,7 +36,6 @@
         android:paddingBottom="5dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:background="@drawable/description_bg"
         android:layout_below="@+id/space6"
         android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/ic_profile" />
@@ -42,13 +51,6 @@
         android:hint="Name"
         android:inputType="textPersonName"
         android:textAlignment="center" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/space6" />
 
     <Space
         android:layout_width="match_parent"
@@ -77,69 +79,25 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/space8" />
 
-    <Spinner
-        android:id="@+id/message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:spinnerMode="dialog"
-        android:layout_below="@+id/space8" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_below="@+id/message"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/space9" />
-
-    <Spinner
-        android:id="@+id/subdept"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:spinnerMode="dialog"
-        android:layout_below="@+id/space9" />
-
-    <Space
-        android:id="@+id/space10"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/subdept" />
-
     <EditText
         android:id="@+id/address"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/save"
+        android:layout_height="?android:attr/actionBarSize"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/space15"
+        android:layout_below="@+id/space16"
         android:background="@drawable/description_bg"
         android:ems="10"
         android:hint="Address"
         android:inputType="textMultiLine"
         android:textAlignment="center" />
 
-    <Button
-        android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:text="Save" />
-
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/space10"
+        android:layout_below="@+id/space8"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/description_bg"
         android:ems="10"
         android:hint="Password"
@@ -157,10 +115,10 @@
         android:id="@+id/phone"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@drawable/description_bg"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignLeft="@+id/password"
+        android:layout_alignStart="@+id/password"
         android:layout_below="@+id/space13"
+        android:background="@drawable/description_bg"
         android:ems="10"
         android:hint="Phone"
         android:inputType="phone"
@@ -172,5 +130,128 @@
         android:layout_below="@+id/phone"
         android:layout_centerHorizontal="true"
         android:id="@+id/space15" />
+
+    <EditText
+        android:id="@+id/department"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_below="@+id/space15"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/description_bg"
+        android:ems="10"
+        android:hint="Department"
+        android:inputType="textPersonName"
+        android:textAlignment="center" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@+id/department"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/space16" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/space7"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/space5"
+        app:srcCompat="@drawable/home_user" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/space8"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/space7"
+        app:srcCompat="@drawable/ic_reg" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/space13"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:background="@color/colorPrimary"
+        android:layout_below="@+id/space8"
+        app:srcCompat="@drawable/ic_password" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/space15"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:background="@color/colorPrimary"
+        android:layout_below="@+id/space13"
+        app:srcCompat="@drawable/ic_phone_receiver" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/space16"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_below="@+id/space15"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        app:srcCompat="@drawable/ic_department" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/address"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:background="#0288D1"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="Address"
+        android:textColor="@color/cardview_light_background" />
+
+    <Space
+        android:id="@+id/space19"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_above="@+id/save"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/address" />
 
 </RelativeLayout>

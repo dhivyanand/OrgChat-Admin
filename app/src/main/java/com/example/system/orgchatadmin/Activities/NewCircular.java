@@ -2,9 +2,12 @@ package com.example.system.orgchatadmin.Activities;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -14,19 +17,31 @@ import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.system.orgchatadmin.Adapters.AttachmentAdapter;
+import com.example.system.orgchatadmin.FileUtil;
 import com.example.system.orgchatadmin.LocalConfig;
 import com.example.system.orgchatadmin.Network.APIRequest;
 import com.example.system.orgchatadmin.R;
@@ -51,7 +66,7 @@ import static java.util.Base64.*;
 public class NewCircular extends AppCompatActivity {
 
     AttachmentAdapter adapter;
-    Button post;
+    FloatingActionButton post;
     EditText title,description;
     ImageButton add;
     ListView attachment;
@@ -61,10 +76,11 @@ public class NewCircular extends AppCompatActivity {
     ArrayList<String> path;
     ArrayList<File> file;
     ArrayList<Uri> file_uri;
+    RelativeLayout popup;
 
     int READ_REQUEST_CODE = 42;
 
-    private void performFileSearch() {
+    private void performFileSearch(String type) {
 
         // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
         // browser.
@@ -78,7 +94,7 @@ public class NewCircular extends AppCompatActivity {
         // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
         // To search for all documents available via installed storage providers,
         // it would be "*/*".
-        intent.setType("*/*");
+        intent.setType(type);
 
         startActivityForResult(intent, READ_REQUEST_CODE);
     }
@@ -107,6 +123,38 @@ public class NewCircular extends AppCompatActivity {
         return result;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String getRealPathFromURI_API19(Context context, Uri uri) {
+        String filePath = "";
+        if (uri.getHost().contains("com.android.providers.media")) {
+            // Image pick from recent
+            String wholeID = DocumentsContract.getDocumentId(uri);
+
+            // Split at colon, use second item in the array
+            String id = wholeID.split(":")[1];
+
+            String[] column = {MediaStore.Images.Media.DATA,MediaStore.Video.Media.DATA,MediaStore.Files.FileColumns.DATA};
+
+            // where id is equal to
+            String sel = MediaStore.Images.Media._ID + "=?";
+
+            Cursor cursor = context.getContentResolver().query(uri,
+                    column, null, new String[]{id}, null);
+
+            int columnIndex = cursor.getColumnIndex(column[0]);
+
+            if (cursor.moveToFirst()) {
+                filePath = cursor.getString(columnIndex);
+            }
+            cursor.close();
+            return filePath;
+        } else {
+            // image pick from gallery
+            return null;// getRealPathFromURI_BelowAPI11(context,uri)
+        }
+
+    }
+
     private boolean notEmpty(ArrayList<Bitmap> thumbnail, ArrayList<Boolean> is_video, ArrayList<String> path){
 
         return thumbnail != null && is_video != null && path != null;
@@ -123,6 +171,7 @@ public class NewCircular extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private boolean sendToServer(String title, String description, ArrayList<String> uri){
 
         try {
@@ -146,9 +195,6 @@ public class NewCircular extends AppCompatActivity {
 
             for (int i = 0; i < file_uri.size(); i++) {
 
-
-                Toast.makeText(this, file_uri.get(i).toString() , Toast.LENGTH_SHORT).show();
-
                 String[] filePathColumn = { MediaStore.Images.Media.DATA, MediaStore.Video.Media.DATA, MediaStore.Files.FileColumns.DATA };
                 Cursor cursor = getApplication().getContentResolver().query(file_uri.get(i), filePathColumn, null, null, null);
                 cursor.moveToFirst();
@@ -156,9 +202,7 @@ public class NewCircular extends AppCompatActivity {
                 String filePath = cursor.getString(columnIndex);
                 cursor.close();
 
-                File file = new File(filePath);
-
-                Toast.makeText(this, file.getName(), Toast.LENGTH_SHORT).show();
+                File file = FileUtil.from(NewCircular.this,file_uri.get(i));// new File(file_uri.get(i).getPath());
 
                 String name = user+id+i+file.getName();
 
@@ -171,8 +215,6 @@ public class NewCircular extends AppCompatActivity {
             JSONObject obj = new JSONObject(res);
 
             String result = (String)obj.get("result");
-
-            Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
 
             if(result.equals("TRUE")) {
 
@@ -188,15 +230,14 @@ public class NewCircular extends AppCompatActivity {
                     String filePath = cursor.getString(columnIndex);
                     cursor.close();
 
-                    File file = new File(filePath);
+                    File f = FileUtil.from(NewCircular.this,file_uri.get(i));
+                    Toast.makeText(this, getRealPathFromURI(file_uri.get(i)), Toast.LENGTH_SHORT).show();
 
-                    mydatabase.execSQL("insert into FILE values('"+id+"','"+file.getName()+"','"+file.getPath()+"')");
+                    mydatabase.execSQL("insert into FILE values('"+id+"','"+f.getName()+"','"+getRealPathFromURI(file_uri.get(i))+"')");
 
                 }
 
                 mydatabase.close();
-
-                Toast.makeText(this, "new circ", Toast.LENGTH_SHORT).show();
 
                 return true;
             }else {
@@ -204,8 +245,7 @@ public class NewCircular extends AppCompatActivity {
             }
 
         }catch(Exception e){
-            System.out.println(e.toString());
-            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+            System.out.println("asdasda"+e.toString());
             return false;
         }
 
@@ -216,12 +256,13 @@ public class NewCircular extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_circular);
 
-        post = (Button)findViewById(R.id.post);
+        post = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         title = (EditText)findViewById(R.id.circular_title);
         description = (EditText)findViewById(R.id.circular_description);
         attachment = (ListView)findViewById(R.id.attachment_list);
         add = (ImageButton)findViewById(R.id.add);
         empty = (TextView)findViewById(R.id.empty);
+        popup = (RelativeLayout)findViewById(R.id.popup_layout);
 
         thumbnail = new ArrayList<Bitmap>();
         is_video = new ArrayList<Boolean>();
@@ -235,16 +276,109 @@ public class NewCircular extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
 
+        attachment.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
+
+                AlertDialog dialog = new AlertDialog.Builder(NewCircular.this)
+                        .setTitle("Delete Item")
+                        .setMessage("What do you want to delete this item?")
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                thumbnail.remove(i);
+                                is_video.remove(i);
+                                path.remove(i);
+
+                                file_uri.remove(i);
+
+                                adapter.notifyDataSetChanged();
+
+                            }
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .create();
+                dialog.show();
+
+                return false;
+            }
+        });
+
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                performFileSearch();
+                //performFileSearch();
+
+                LayoutInflater layoutInflater = (LayoutInflater) NewCircular.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View customView = layoutInflater.inflate(R.layout.attachment_popup,null);
+
+                LinearLayout attr;
+                ImageButton image, video, document, cancel;
+
+                attr = (LinearLayout)customView.findViewById(R.id.linearLayout);
+
+                cancel = (ImageButton)customView.findViewById(R.id.close);
+
+                image = (ImageButton)attr.findViewById(R.id.image);
+                video = (ImageButton)attr.findViewById(R.id.video);
+                document = (ImageButton)attr.findViewById(R.id.document);
+
+                //closePopupBtn = (Button) customView.findViewById(R.id.closePopupBtn);
+
+                //instantiate popup window
+                final PopupWindow popupWindow = new PopupWindow(customView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
+
+                Animation aniFade = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
+
+                popupWindow.setAnimationStyle(R.style.Animation);
+                popupWindow.showAtLocation(popup, Gravity.CENTER, 0, 0);
+
+                image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        performFileSearch("image/*");
+                        popupWindow.dismiss();
+                    }
+                });
+
+                video.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        performFileSearch("video/*");
+                        popupWindow.dismiss();
+                    }
+                });
+
+                document.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        performFileSearch("application/*");
+                        popupWindow.dismiss();
+                    }
+                });
+
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        popupWindow.dismiss();
+                    }
+                });
+
+                //close the popup window on button click
+                /*closePopupBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                }); */
 
             }
         });
 
         post.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View view) {
 
@@ -253,8 +387,10 @@ public class NewCircular extends AppCompatActivity {
 
                 if(!t.equals("")) {
 
+                    post.setEnabled(false);
+
                     if(sendToServer(t,desc,path)){
-                        Toast.makeText(NewCircular.this, "Circular sent successfully.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NewCircular.this, "Notice sent successfully.", Toast.LENGTH_SHORT).show();
                         finish();
                     }
 

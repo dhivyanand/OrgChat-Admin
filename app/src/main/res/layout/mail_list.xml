@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
@@ -11,17 +12,20 @@
 
     <TextView
         android:id="@+id/message"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="?android:attr/actionBarSize"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="6dp"
+        android:layout_toEndOf="@+id/imageView5"
         android:layout_toLeftOf="@+id/time"
+        android:layout_toRightOf="@+id/imageView5"
         android:layout_toStartOf="@+id/time"
         android:gravity="center"
+        android:paddingLeft="10dp"
         android:text="TextView"
-        android:textSize="18sp" />
+        android:textAlignment="textStart"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/time"
@@ -52,4 +56,14 @@
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
         android:text="TextView" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_alignTop="@+id/time"
+        app:srcCompat="@drawable/home_suggestion" />
 </RelativeLayout>

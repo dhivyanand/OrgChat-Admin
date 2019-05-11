@@ -13,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -47,80 +48,6 @@ public class AddUser extends AppCompatActivity {
 
     ImageView dp;
 
-    ArrayList<String> fetch_local_department(){
-
-        ArrayList<String> list = new ArrayList<String>();
-
-        try {
-
-            SQLiteDatabase mydatabase = getApplicationContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
-
-            Cursor resultSet = mydatabase.rawQuery("Select * from DEPARTMENT",null);
-
-            if(resultSet.moveToFirst()) {
-
-                do {
-
-                    String dept = resultSet.getString(1);
-                    list.add(dept);
-
-                } while (resultSet.moveToNext());
-
-                first_dept = list.get(0);
-
-            }
-
-
-            resultSet.close();
-            mydatabase.close();
-
-        }catch(SQLException e){
-
-        }
-
-        return list;
-
-    }
-
-    ArrayList<String> fetch_local_subdepartment(String department){
-
-        ArrayList<String> list = new ArrayList<String>();
-
-        try{
-
-            SQLiteDatabase mydatabase = getApplicationContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
-
-            Cursor resultSet = mydatabase.rawQuery("Select * from SUBDEPARTMENT where DEPARTMENT = '"+department+"'",null);
-
-            if(resultSet.moveToFirst()) {
-
-                do {
-
-                    String dept = resultSet.getString(1);
-                    list.add(dept);
-
-                } while (resultSet.moveToNext());
-
-            }
-
-            resultSet.close();
-            mydatabase.close();
-
-        }catch(Exception e){
-
-        }
-
-        return list;
-    }
-
-    ArrayAdapter<String> getAdap(String dept){
-
-        ArrayAdapter<String> sub_dept_adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, fetch_local_subdepartment(dept));
-        return sub_dept_adapter;
-
-    }
-
     public String getSubDeptID(String subdept){
 
         try{
@@ -128,8 +55,6 @@ public class AddUser extends AppCompatActivity {
             SQLiteDatabase mydatabase = getApplicationContext().openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
 
             Cursor resultSet = mydatabase.rawQuery("Select SUBDEPARTMENT_ID from SUBDEPARTMENT where SUBDEPARTMENT = '"+subdept+"'",null);
-
-            Toast.makeText(this, subdept, Toast.LENGTH_SHORT).show();
 
             String subdept_id = "";
             if(resultSet.moveToFirst())
@@ -173,8 +98,6 @@ public class AddUser extends AppCompatActivity {
 
             String res = APIRequest.processRequest(arg, LocalConfig.rootURL + "createUser.php", getApplicationContext());
 
-            Toast.makeText(this, res, Toast.LENGTH_SHORT).show();
-
             if (res.equals("TRUE")) {
 
                 SQLiteDatabase mydatabase = openOrCreateDatabase("org_chat_db", MODE_PRIVATE, null);
@@ -216,45 +139,22 @@ public class AddUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user);
 
-        Button done;
-        final EditText name, reg, password, phone, address;
+        FloatingActionButton done;
+        final EditText name, reg, password, phone, address, department;
 
         first_dept = null;
         dpImg = null;
 
-        done = (Button)findViewById(R.id.save);
+        done = (FloatingActionButton) findViewById(R.id.save);
 
         name = (EditText)findViewById(R.id.name);
         reg = (EditText)findViewById(R.id.reg);
         password = (EditText)findViewById(R.id.password);
         phone = (EditText)findViewById(R.id.phone);
         address = (EditText)findViewById(R.id.address);
+        department = (EditText)findViewById(R.id.department);
+
         dp = (ImageView)findViewById(R.id.dp);
-
-        dept = (Spinner)findViewById(R.id.message);
-        subdept = (Spinner)findViewById(R.id.subdept);
-
-        ArrayAdapter<String> dept_adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, fetch_local_department());
-
-        ArrayAdapter<String> sub_dept_adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, fetch_local_subdepartment(first_dept));
-
-        dept.setAdapter(dept_adapter);
-        subdept.setAdapter(sub_dept_adapter);
-
-        dept.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                String selectedItem = parent.getItemAtPosition(position).toString();
-                subdept.setAdapter(getAdap(selectedItem));
-            } // to close the onItemSelected
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-
-            }
-        });
 
         dp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -282,9 +182,10 @@ public class AddUser extends AppCompatActivity {
 
                     //Toast.makeText(AddUser.this, image, Toast.LENGTH_SHORT).show();
 
-                    if(addUserToServer(uname,u_reg,u_password,subdept.getSelectedItem().toString(),u_phone,u_address,image)){
+                    if(addUserToServer(uname,u_reg,u_password,department.getText().toString(),u_phone,u_address,image)){
 
                         Toast.makeText(AddUser.this, "User created successfully.", Toast.LENGTH_SHORT).show();
+                        finish();
 
                     }else{
 

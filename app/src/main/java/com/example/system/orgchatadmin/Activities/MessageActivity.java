@@ -23,6 +23,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -153,9 +155,9 @@ public class MessageActivity extends AppCompatActivity {
 
                 try {
 
-                    String url = "https://ide50-dhivianand998.legacy.cs50.io:8080/Org_chat_Server/scripts/syncFile.php";
+                    String url = "http://epostbox.sakthiauto.com/syncFile.php";
                     URL obj = new URL(url);
-                    HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+                    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
                     //add reuqest header
                     con.setRequestMethod("POST");
@@ -172,11 +174,12 @@ public class MessageActivity extends AppCompatActivity {
 
                     DataInputStream din = new DataInputStream(con.getInputStream());
 
-                    File f = new File(Environment.getExternalStorageDirectory() + File.separator + "/OrgChatClient");
+                    File f = new File(Environment.getExternalStorageDirectory() + File.separator + "/OrgChatClient/");
                     f.mkdir();
                     File file = new File(f, name);
 
-                    file_name = file.getPath();
+                    file_name = file.getAbsolutePath();
+                    file_name = Environment.getExternalStorageDirectory() + File.separator + "/OrgChatClient/"+name;
 
                     file.createNewFile();
 
@@ -201,10 +204,7 @@ public class MessageActivity extends AppCompatActivity {
         try {
             t.start();
             t.join();
-            if(a.size()>0)
-                Toast.makeText(c, a.get(0), Toast.LENGTH_SHORT).show();
         }catch(Exception e){
-            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -320,9 +320,20 @@ public class MessageActivity extends AppCompatActivity {
 
                 }else{
 
-                    Toast.makeText(MessageActivity.this, attachment_name.get(i), Toast.LENGTH_SHORT).show();
-
                     File file = new File(attachment_location.get(i));
+                    Toast.makeText(MessageActivity.this, attachment_location.get(i), Toast.LENGTH_SHORT).show();
+
+                    String result = attachment_location.get(i);
+                    int cut = result.lastIndexOf(File.separator);
+                    result = result.substring(cut + 1);
+
+                    file = new File(Environment.getExternalStorageDirectory()+File.separator+"OrgChatClient/"+result);
+
+                    try {
+                        FileOpen.openFile(getApplicationContext(),file);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     Uri data = Uri.parse(attachment_location.get(i));
@@ -332,7 +343,7 @@ public class MessageActivity extends AppCompatActivity {
 
                     intent.setDataAndType(data, "*/*");
 
-                    startActivity(intent);
+                    //startActivity(intent);
 
                 }
 

@@ -119,7 +119,6 @@ public class UserFragment extends Fragment {
             //mydatabase.close();
 
         }catch(Exception e){
-            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
             System.out.println(e.toString());
         }
 

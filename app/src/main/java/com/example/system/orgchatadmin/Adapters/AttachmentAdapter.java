@@ -65,8 +65,8 @@ public class AttachmentAdapter extends BaseAdapter {
         root = inflater.inflate(R.layout.attachment_view,null);
 
         name = (TextView)root.findViewById(R.id.name);
-        thumb = (ImageView)root.findViewById(R.id.thumb);
-        video = (ImageView)root.findViewById(R.id.video);
+        //thumb = (ImageView)root.findViewById(R.id.thumb);
+        //video = (ImageView)root.findViewById(R.id.video);
 
         if(path.get(i) != null)
             name.setText(path.get(i));
