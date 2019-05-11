@@ -6,6 +6,6 @@ package com.example.system.orgchatadmin;
 
 public class LocalConfig {
 
-    public static String rootURL = "http://epostbox.sakthiauto.com/";
+    public static String rootURL = "URL OF YOUR WEB SERVER ONLY HTTP PROTOCOL";
 
 }

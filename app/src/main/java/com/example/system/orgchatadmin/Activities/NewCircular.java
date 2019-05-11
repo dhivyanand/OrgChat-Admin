@@ -36,6 +36,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,6 +78,7 @@ public class NewCircular extends AppCompatActivity {
     ArrayList<File> file;
     ArrayList<Uri> file_uri;
     RelativeLayout popup;
+    ProgressBar progress;
 
     int READ_REQUEST_CODE = 42;
 
@@ -390,6 +392,7 @@ public class NewCircular extends AppCompatActivity {
                     post.setEnabled(false);
 
                     if(sendToServer(t,desc,path)){
+                        progress.setVisibility(View.VISIBLE);
                         Toast.makeText(NewCircular.this, "Notice sent successfully.", Toast.LENGTH_SHORT).show();
                         finish();
                     }
